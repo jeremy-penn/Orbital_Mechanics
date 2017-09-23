@@ -1,7 +1,9 @@
 function trajectory(R0,V0,mu,dt,step)
-% TRAJECTORY calculates and plots the trajectory of a satellite around
-%            a central object.
-
+%% Calculate And Plot Trajectory
+%
+% Jeremy Penn
+% 22 September 2017
+%
     clc; clear R V Long Lat t ind Ri;
     t      = 0;       %[s] Initial time
     ind    = 1;
@@ -12,13 +14,13 @@ function trajectory(R0,V0,mu,dt,step)
             ind = ind + 1;
             t = t + step;
         end
-    % Instantiate Movie Maker
+    %% Instantiate Movie Maker
     vid = VideoWriter('orbit.avi');
     open(vid);
     ma = max(Ri);
     m = max(ma);
     
-    % Earth 3D Plot
+    %% Earth 3D Plot And Movie Export
     Earth3DPlot(1);
     
     for i = 1:length(Ri)

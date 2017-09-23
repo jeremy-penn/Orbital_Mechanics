@@ -3,7 +3,7 @@ function y = Earth3DPlot(~)
 %
 % Ryan Gray
 % 8 Sep 2004
-% Revised 9 March 2006, 31 Jan 2006, 16 Oct 2013
+% Revised 9 March 2006, 31 Jan 2006, 16 Oct 2013, 22 September 2017 (Jeremy Penn)
 
 %% Options
 

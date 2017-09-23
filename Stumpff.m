@@ -1,6 +1,9 @@
 function [Cz, Sz] = Stumpff(z)
-%STUMPFF Generates the Stumpff functions for a given
-%        input, z.
+%% Stumpff Functions
+%
+% Jeremy Penn
+% 22 September 2017
+%
 
      if (z > 0)
          Sz = (z^0.5 -sin(z^0.5))/z^1.5;
