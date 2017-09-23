@@ -1,6 +1,6 @@
 # Satellite-Orbit
 Calculate satellite orbits
 
-# Acknowledgements:
+## Acknowledgements:
 
-Thank you to Ryan Gray for posting his public code for Earth plotting
+Thank you to Ryan Gray for posting his public code for Earth plotting.
