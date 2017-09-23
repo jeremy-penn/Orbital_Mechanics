@@ -1,5 +1,6 @@
 # Satellite-Orbit
 Calculate satellite orbits
 
-TODO: 
-  1) Expand to simulate binary orbits
+# Acknowledgements:
+
+Thank you to Ryan Gray for posting his public code for Earth plotting
