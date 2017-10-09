@@ -5,7 +5,7 @@ function [al , del] = R2RA_Dec(r)
 % 22 September 2017
 %
 
-del = acos(r(3)/norm(r));
-al  = atan(r(2) / r(1));
+    del = acos(r(3)/norm(r));
+    al  = atan(r(2) / r(1));
+%
 end
-

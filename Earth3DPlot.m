@@ -1,4 +1,4 @@
-function y = Earth3DPlot(~)
+function y = Earth3DPlot
 %% Textured 3D Earth example
 %
 % Ryan Gray
@@ -52,7 +52,7 @@ axis vis3d;
 
 globe = surf(x, y, -z, 'FaceColor', 'none', 'EdgeColor', 0.5*[1 1 1]);
 
-if ~isempty(GMST0)
+if isempty(GMST0)
     hgx = hgtransform;
     set(hgx,'Matrix', makehgtform('zrotate',GMST0));
     set(globe,'Parent',hgx);
