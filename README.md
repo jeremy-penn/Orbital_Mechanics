@@ -1,5 +1,5 @@
 # Satellite-Orbit
-Calculate satellite orbits
+Calculate satellite trajectories in low-Earth orbit & binary system orbits
 
 ## Acknowledgements:
 
