@@ -7,6 +7,9 @@ calculates the trajectory of two masses in a binary orbit
 # Earth3DPlot
 creates a 3D spherical plot of the Earth
 
+# GeocentricTrack
+creates a 3D plot of satellite orbit around the Earth in the geocentric coordinate system.
+
 # R2RA_Dec
 converts cartesian coordinates to Right Ascension and Declination
 
