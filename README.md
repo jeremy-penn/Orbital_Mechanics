@@ -17,7 +17,7 @@ converts cartesian coordinates to Right Ascension and Declination
 calculates the Stumpff functions
 
 # trajectory
-calculates and plots the trajectory of a satellite orbiting Earth
+calculates the trajectory of a satellite orbiting Earth
 
 # UniversalLagrange
 calculates the f and g functions for the universal variable method
