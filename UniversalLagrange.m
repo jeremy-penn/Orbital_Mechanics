@@ -14,11 +14,14 @@ function [R , V] = UniversalLagrange(R0,V0,dt)
     %           g lagrange functions used to calculate the time-dependent 
     %           position and velocity of a satellite.
     % 
-    % Inputs:   o R0 - A 1x3 vector of the satellite's initial position
-    %           o V0 - A 1x3 vector of the satellite's initial velocity
-    %           o dt - The final time in seconds [s]
-    %           o step - The step sized used to determine how often to
-    %                    calculate position and velocity in seconds [s]
+    % Inputs:   o R0    - A 1x3 vector of the satellite's initial position
+    %           o V0    - A 1x3 vector of the satellite's initial velocity
+    %           o dt    - The final time in seconds [s]
+    %           o step  - The step sized used to determine how often to
+    %                     calculate position and velocity in seconds [s]
+    %
+    % Outputs:  o R     - The new position.
+    %           o V     - The new velocity.
     %
 
     r0  = norm(R0);      % [km] Magnitude of initial position R0

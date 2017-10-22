@@ -1,16 +1,16 @@
-function GeocentricTrack(R0, V0, dt, step)
+function GroundTrack(R0, V0, dt, step)
     %% Calculate and plot the geocentric orbit of a satellite about the Earth
     %
     % Jeremy Penn
-    % 19 October 2017
+    % 21 October 2017
     %
-    % Revision 19/10/17
+    % Revision 21/10/17
     %
-    % function GeocentricTrack(R0, V0, dt, step)
+    % function GroundTrack(R0, V0, dt, step)
     %
-    % Purpose:  This function plots the orbit of a satellite in the
+    % Purpose:  This function plots the ground track of a satellite in the
     %           geocentric frame of reference. Additionally, it creates a
-    %           video of the orbit.
+    %           video of the ground track.
     % 
     % Inputs:   o R0 - A 1x3 vector of the satellite's initial position
     %           o V0 - A 1x3 vector of the satellite's initial velocity
@@ -21,6 +21,17 @@ function GeocentricTrack(R0, V0, dt, step)
     
     [Ri,Vi] = trajectory(R0,V0,dt,step);
     
+    %% Convert positions to RA and dec
+    ind = 1;
+    N   = length(Ri);
+    RA  = zeros(N,1);
+    dec = zeros(N,1);
+    
+    for j = 1:length(Ri)
+        [RA(ind),dec(ind)] = R2RA_Dec(Ri(j,:));
+        ind = ind + 1;
+    end
+    
     %% Instantiate Movie Maker
     str = input('Would you like a movie?\n','s');
     
@@ -29,27 +40,27 @@ function GeocentricTrack(R0, V0, dt, step)
         con     = strcat('~/Documents/matlab/movie/',movName);
         vid = VideoWriter(con);
         open(vid);
-        % Earth 3D Plot And Movie Export
+        % Plot the ground track
 
         figure('units','normalized','outerposition',[0 0 1 1]);
-        EarthPlot('orbit');
+        EarthPlot('ground');
         hold on
-        scatter3(Ri(1,1),Ri(1,2),Ri(1,3),'.r');
+        scatter(RA(1),dec(1),'.r');
         for i = 2:length(Ri)
-            scatter3(Ri(i,1),Ri(i,2),Ri(i,3),'.r');
+            scatter(RA(i),dec(i),'.r');
             frame = getframe(gcf);
             writeVideo(vid,frame);
         end
         hold off;
         close(vid);
     else
-        % Earth 3D Plot
+        % Plot the ground track
         
         figure('units','normalized','outerposition',[0 0 1 1]);
-        EarthPlot('orbit');
+        EarthPlot('ground');
         hold on
         for i = 1:length(Ri)
-            scatter3(Ri(i,1),Ri(i,2),Ri(i,3),'.r');
+            scatter(RA(i),dec(i),'.r');
         end
     end
 end
