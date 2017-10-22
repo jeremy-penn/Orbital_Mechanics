@@ -1,4 +1,4 @@
-function [al , del] = R2RA_Dec(r)
+function [RA , dec] = R2RA_Dec(r)
     %% Convert Cartesian Coordinates to Right Ascension and Declination
     %
     % Jeremy Penn
@@ -6,7 +6,7 @@ function [al , del] = R2RA_Dec(r)
     %
     % Revision  22/09/17
     %           
-    % function [al , del] = R2RA_Dec(r)
+    % function [RA , dec] = R2RA_Dec(r)
     %
     % Purpose:  This function converts the position vector, r, into the
     %           Right Acension and Declination.
@@ -14,11 +14,20 @@ function [al , del] = R2RA_Dec(r)
     % Inputs:   o r - a 1x3 vector of the x, y and z positions of the
     %                 satellite.
     % 
-    % Output:   o al - The Right Ascension
-    %           o del - The Declination
+    % Output:   o RA - The Right Ascension
+    %           o dec - The Declination
     %
+    l = r(1)/norm(r);
+    m = r(2)/norm(r);
+    n = r(3)/norm(r);
 
-    del = acos(r(3)/norm(r));
-    al  = atan(r(2) / r(1));
-%
+    dec = asin(n);
+    
+    if m > 0
+        RA = acos(l/cos(dec))*180/pi;
+    else
+        RA = 360 - acos(l/cos(dec))*180/pi;
+    end
+    
+    dec = dec*180/pi;
 end
