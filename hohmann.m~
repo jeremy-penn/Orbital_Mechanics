@@ -1,0 +1,41 @@
+function hohmann(Ria,Rip,Rfa,Rfp,m, isp)
+    %% Calculates the delta-v to Hohmann transfer from orbit 1 to 2
+    %
+    % Jeremy Penn
+    % 23/10/2017
+    %
+    % Revision: 23/10/2017
+    %
+    % function hohmann(Ria,Rip,Rfa,Rfp)
+    %
+    % Purpose: This function calculates the delta-v necessary to Hohmann
+    %          transfer from orbit 1 to 2. Additionally, it calculates the fuel
+    %          usage.
+    %
+    % Input:  o Ria   - The altitude of the apoapis of the initial orbit [km]
+    %         o Rip   - The altitude of the periapis of the initial orbit [km]
+    %         o Rfa   - The altitude of the apoapis of the final orbit [km]
+    %         o Rfp   - The altitude of the perigee of the final orbit [km]
+    %         o m     - The mass of the spacecraft before 1st manuveur [kg]
+    %         o isp   - The specific impulse of the engine [s]
+    %
+    %% Calculate the angular momenta
+    h1 = sqrt(2*mu)*sqrt((Ria*Rip)/(Ria + Rip));
+    h2 = sqrt(2*mu)*sqrt((Rfa*Rip)/(Rfa + Rip));
+    h3 = sqrt(2*mu)*sqrt((Rfa*Rfp)/(Rfa + Rfp));
+    
+    %% Calculate the speed at each point
+    va1 = h1 / Rip;
+    va2 = h2 / Rip;
+    va  = va2 - va1;
+    
+    vb2 = h2 / Rfa;
+    vb3 = h3 / Rfa;
+    vb  = vb3 - vb2;
+    
+    deltav = abs(va) + abs(vb);
+    
+    %% Calculate mass of propellant expended
+    
+    deltam = m*(1 - exp(-(deltav /(isp*g))));
+end

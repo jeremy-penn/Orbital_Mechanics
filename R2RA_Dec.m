@@ -14,8 +14,8 @@ function [RA , dec] = R2RA_Dec(r)
     % Inputs:   o r - a 1x3 vector of the x, y and z positions of the
     %                 satellite.
     % 
-    % Output:   o RA - The Right Ascension
-    %           o dec - The Declination
+    % Output:   o RA - The Right Ascension [deg]
+    %           o dec - The Declination    [deg]
     %
     l = r(1)/norm(r);
     m = r(2)/norm(r);

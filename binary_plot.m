@@ -4,7 +4,7 @@ function binary_plot(R0,V0,dt,step,m1,m2)
     % Jeremy Penn
     % 21 October 2017
     %
-    % Revision  21/10/17
+    % Revision: 21/10/17
     %           
     % function binary_plot(R0,V0,dt,step,m1,m2)
     %
