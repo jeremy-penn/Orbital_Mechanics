@@ -11,14 +11,12 @@ function r = rotation(R,th,phi,rho)
     % Purpose:  This program calculates the new position vector after applying
     %           rotations of th(x-axis), phi(y-axis), and rho(z-axis).
     % 
-    % Inputs:   o R0    - A 1x3 vector of the satellite's initial position
-    %           o V0    - A 1x3 vector of the satellite's initial velocity
-    %           o dt    - The final time in seconds [s]
-    %           o step  - The step sized used to determine how often to
-    %                     calculate position and velocity in seconds [s]
+    % Inputs:   o R     - A 1x3 vector to be rotated.
+    %           o th    - The rotation angle about the x-axis.
+    %           o phi   - The rotation angle about the y-axis.
+    %           o rho   - The rotation angle about the z-axis.
     %
-    % Outputs:  o R     - The new position.
-    %           o V     - The new velocity.
+    % Outputs:  o r     - The new vector after rotation.
     %
 
     clear r; clc;
