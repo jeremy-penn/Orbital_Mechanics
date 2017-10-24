@@ -1,4 +1,4 @@
-function GeocentricTrack(R0, V0, dt, step)
+function GeocentricTrack(R0, V0, dt, step,mu)
     %% Calculate and plot the geocentric orbit of a satellite about the Earth
     %
     % Jeremy Penn
@@ -19,7 +19,11 @@ function GeocentricTrack(R0, V0, dt, step)
     %                    calculate position and velocity in seconds [s]
     %
     
-    [Ri,Vi] = trajectory(R0,V0,dt,step);
+    if nargin == 4
+        mu  = 398600;        % [km^3/s^2] Standard Gravitational Parameter
+    end
+    
+    [Ri,Vi] = trajectory(R0,V0,dt,step,mu);
     
     %% Instantiate Movie Maker
     str = input('Would you like a movie?\n','s');

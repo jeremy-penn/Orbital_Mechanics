@@ -1,4 +1,4 @@
-function [R , V] = UniversalLagrange(R0,V0,dt)
+function [R , V] = UniversalLagrange(R0,V0,dt,mu)
     %% Universal Lagrange Function and True Anomoly
     %
     % Jeremy Penn
@@ -17,17 +17,20 @@ function [R , V] = UniversalLagrange(R0,V0,dt)
     % Inputs:   o R0    - A 1x3 vector of the satellite's initial position
     %           o V0    - A 1x3 vector of the satellite's initial velocity
     %           o dt    - The final time in seconds [s]
-    %           o step  - The step sized used to determine how often to
-    %                     calculate position and velocity in seconds [s]
+    %           o mu    - The Standard Grav Parameter [OPTIONAL]. Defaults
+    %                     to Earth [km^3/s^2]
     %
     % Outputs:  o R     - The new position.
     %           o V     - The new velocity.
     %
 
+    if nargin == 3
+        mu  = 398600;        % [km^3/s^2] Standard Gravitational Parameter
+    end
+    
     r0  = norm(R0);      % [km] Magnitude of initial position R0
     v0  = norm(V0);      % [km/s] Magnitude of initival velocity V0
     vr0 = R0*V0'/r0;     % [km/s] Orbital velocitymu
-    mu  = 398600;        % [km^3/s^2] Standard Gravitational Parameter
     alpha   = 2/r0 - v0^2/mu;
 
     X0 = mu^0.5*abs(alpha)*dt;  %[km^0.5]Initial estimate of X0

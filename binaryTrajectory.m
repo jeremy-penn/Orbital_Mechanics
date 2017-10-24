@@ -1,4 +1,4 @@
-function [rf1,rf2] = binaryTrajectory(R0,V0,m1,m2,dt,step) %#ok<*STOUT>
+function [rf1,rf2] = binaryTrajectory(R0,V0,m1,m2,dt,step)
     %% Calculate the relative tracjectories for two bodies orbiting their center of mass
     %
     % Jeremy Penn
@@ -22,16 +22,19 @@ function [rf1,rf2] = binaryTrajectory(R0,V0,m1,m2,dt,step) %#ok<*STOUT>
     %
     
     clc; clear R V t ind RedMassN rf1 rf2;
+    
     t       = 0;                        %[s] Initial time
     ind     = 1;
     mn1     = m1 * 1.988e+30;           %[kg] Convert mass to kg
     mn2     = m2 * 1.988e+30;           %[kg] Convert mass to kg
     RedMass = (mn1*mn2) / (mn1 + mn2);  %[kg] Reduced Mass
+    G       = 6.647e-23;                %[km^3/kg s^2] Grav Constant
+    mu      = G * (mn1 + mn2);
     N       = (dt / step);
     rf1     = zeros(N,3);               %[km] Final Position of m1
     rf2     = zeros(N,3);               %[km] Final Position of m2
         while (t < dt)
-            [R, V] = UniversalLagrange(R0, V0, t); %#ok<*ASGLU>
+            [R, V] = UniversalLagrange(R0, V0, t, mu);
             rf1(ind,:) = (RedMass/m1)*R;
             rf2(ind,:) = -(RedMass/m2)*R;
             ind = ind + 1;
