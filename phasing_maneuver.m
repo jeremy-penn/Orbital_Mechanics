@@ -1,4 +1,4 @@
-function phasing_maneuver(Ria,Rip,n,th,mu)
+function phasing_maneuver(Ria,Rip,th,n,mu)
     %% Calculates the apogee and delta-v required for a phasing maneuver
     %
     % Jeremy Penn
@@ -14,16 +14,20 @@ function phasing_maneuver(Ria,Rip,n,th,mu)
     % 
     % Inputs:   o Ria   - The apogee of the initial orbit [km].
     %           o Rip   - The perigee of the initial orbit [km].
-    %           o n     - The number of phasing orbits desired.
+    %           o n     - The number of phasing orbits desired [OPTIONAL].
     %           o th    - The true anomaly of the target [deg].
     %           o mu    - The standard grav parameter of the central body
     %                     [OPTIONAL]. Defaults to Earth [km^3/s^2].
     %
     clc;
     if nargin == 4
+        n =1;
         mu = 398600; %[km^3/s^2]
     end
     
+    if nargin == 5
+        mu = 398600; %[km^3/s^2]
+    end
     %% Confirm th is between 0 and 360
     while th < 0
         th = 360 + th;
