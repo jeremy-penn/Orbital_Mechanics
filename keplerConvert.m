@@ -1,4 +1,4 @@
-function kepler = keplerConvert(R,V)
+function kepler = keplerConvert(R,V,mu)
     %% Calculate all six orbital elements fromega the initial position and velocity
     %
     % Jeremy Penn
@@ -13,12 +13,15 @@ function kepler = keplerConvert(R,V)
     % 
     % Inputs:   o R - A 1x3 vector of the satellite's initial position
     %           o V - A 1x3 vector of the satellite's initial velocity
+    %           o mu - The standard Grav Param [OPTIONAL].
     %
     % Outputs:  o kepler - A 1x6 vector containing the orbital elements.
     %
     
     clear r v vr H h i k N n E e omega w theta; clc;
-    mu = 398600;
+    if nargin == 2
+        mu = 398600;
+    end
     
     %% Set up the initial conditions
     

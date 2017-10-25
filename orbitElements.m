@@ -12,8 +12,7 @@ function orbitElements(R,V,mu)
     %           
     % function orbitElements(R,V,mu)
     %
-    % Purpose:  This function calculates the trajectory of a satellite
-    %           around the Earth over a given time interval.
+    % Purpose:  This function calculates the classic orbital elements.
     % 
     % Inputs:   o R  - A 1x3 vector describing the initial position of the
     %                  satellite.

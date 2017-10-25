@@ -1,5 +1,5 @@
 function EarthPlot(mode)
-    %% Textured 3D Earth example
+    %% Textured 3D Earth
     %
     % Jeremy Penn
     % 21/10/2017
