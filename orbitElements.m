@@ -79,7 +79,7 @@ function orbitElements(R,V,mu)
     
     %% Display the results
     
-    fprintf('The specific angular momegaentum is %8.2f km^2/s\n',h)
+    fprintf('The specific angular momentum is %8.2f km^2/s\n',h)
     fprintf('The inclination is %4.1f deg\n',i)
     fprintf('The right ascension of the ascending node is %4.1f deg\n',omega)
     fprintf('The eccentricity is %4.4f \n',e)

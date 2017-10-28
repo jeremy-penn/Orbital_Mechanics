@@ -31,7 +31,7 @@ function [Ri,Vi] = trajectory(R0,V0,dt,step,mu)
 
     t      = 0;       %[s] Initial time
     ind    = 1;
-    N      = (dt / step) + 1;
+    N      = (dt / step);
     Ri     = zeros(N,3);
     Vi     = zeros(N,3);
         while (t < dt)
