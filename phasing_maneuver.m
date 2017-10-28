@@ -20,12 +20,12 @@ function phasing_maneuver(Ria,Rip,th,n,mu)
     %                     [OPTIONAL]. Defaults to Earth [km^3/s^2].
     %
     clc;
-    if nargin == 4
+    if nargin == 3
         n =1;
         mu = 398600; %[km^3/s^2]
     end
     
-    if nargin == 5
+    if nargin == 4
         mu = 398600; %[km^3/s^2]
     end
     %% Confirm th is between 0 and 360

@@ -18,6 +18,7 @@ function GeocentricTrack(R0, V0, dt, step,mu)
     %           o step - The step sized used to determine how often to
     %                    calculate position and velocity in seconds [s]
     %
+    load topo
     
     if nargin == 4
         mu  = 398600;        % [km^3/s^2] Standard Gravitational Parameter
@@ -33,25 +34,56 @@ function GeocentricTrack(R0, V0, dt, step,mu)
         con     = strcat('~/Documents/matlab/movie/',movName);
         vid = VideoWriter(con);
         open(vid);
-        % Earth 3D Plot And Movie Export
+        
+        grs80 = referenceEllipsoid('grs80','km');
+        
+        figure('Renderer','opengl')
+        ax = axesm('globe','Geoid',grs80,'Grid','off', ...
+            'GLineWidth',1,'GLineStyle','-',...
+            'Gcolor',[0.9 0.9 0.1],'Galtitude',100);
+        ax.Position = [0 0 1 1];
+        axis equal off
 
-        figure('units','normalized','outerposition',[0 0 1 1]);
-        EarthPlot('orbit');
-        hold on
-        scatter3(Ri(1,1),Ri(1,2),Ri(1,3),'.r');
-        for i = 2:length(Ri)
+        geoshow(topo,topolegend,'DisplayType','texturemap')
+        demcmap(topo)
+        land = shaperead('landareas','UseGeoCoords',true);
+        plotm([land.Lat],[land.Lon],'Color','black')
+        rivers = shaperead('worldrivers','UseGeoCoords',true);
+        plotm([rivers.Lat],[rivers.Lon],'Color','blue')
+        
+        n          = dt/step;
+        rate       = 360/86164;       % Earth's rotation rate [deg/sec]
+        rotperstep = n*rate;
+        totalrot   = rotperstep*step; % Total degrees of rotation
+        rotate     = 360:-rotperstep:totalrot;
+        
+        for i = 1:length(Ri)
+            view(rotate(i),23.5);     %  Earth's axis tilts by 23.5 degrees
+            drawnow
             scatter3(Ri(i,1),Ri(i,2),Ri(i,3),'.r');
             frame = getframe(gcf);
             writeVideo(vid,frame);
         end
-        hold off;
         close(vid);
     else
-        % Earth 3D Plot
         
-        figure('units','normalized','outerposition',[0 0 1 1]);
-        EarthPlot('orbit');
-        hold on
+        grs80 = referenceEllipsoid('grs80','km');
+        
+        figure('Renderer','opengl')
+        ax = axesm('globe','Geoid',grs80,'Grid','off', ...
+            'GLineWidth',1,'GLineStyle','-',...
+            'Gcolor',[0.9 0.9 0.1],'Galtitude',100);
+        ax.Position = [0 0 1 1];
+        axis equal off
+        view(3)
+
+        geoshow(topo,topolegend,'DisplayType','texturemap')
+        demcmap(topo)
+        land = shaperead('landareas','UseGeoCoords',true);
+        plotm([land.Lat],[land.Lon],'Color','black')
+        rivers = shaperead('worldrivers','UseGeoCoords',true);
+        plotm([rivers.Lat],[rivers.Lon],'Color','blue')
+        
         for i = 1:length(Ri)
             scatter3(Ri(i,1),Ri(i,2),Ri(i,3),'.r');
         end

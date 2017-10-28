@@ -23,6 +23,8 @@ function GroundTrack(R0, V0, dt, step, mu)
         mu  = 398600;        % [km^3/s^2] Standard Gravitational Parameter
     end
     
+    load topo
+    
     [Ri,Vi] = trajectory(R0,V0,dt,step,mu);
     
     %% Convert positions to RA and dec
@@ -45,24 +47,52 @@ function GroundTrack(R0, V0, dt, step, mu)
         vid = VideoWriter(con);
         open(vid);
         % Plot the ground track
+        figure('units','normalized','outerposition',[0 0 1 1])
 
-        figure('units','normalized','outerposition',[0 0 1 1]);
-        EarthPlot('ground');
-        hold on
-        scatter(RA(1),dec(1),'.r');
-        for i = 2:length(Ri)
+
+        image([0 360],[-90 90], flip(topo), 'CDataMapping', 'scaled')
+        colormap(topomap1)
+
+        axis equal                                % set axis units to be the same size
+
+        ax = gca;                                 % get current axis               
+        ax.XLim = [0 360];                        % set x limits
+        ax.YLim = [-90 90];                       % set y limits
+        ax.XTick = [0 60 120 180 240 300 360];    % define x ticks
+        ax.YTick = [-90 -60 -30 0 30 60 90];      % define y ticks
+        
+        ylabel('Latitude [deg]');
+        xlabel('Longitude [deg]');
+        title('Satellite Ground Track');
+        hold on;
+        
+        for i = 1:length(Ri)
             scatter(RA(i),dec(i),'.r');
             frame = getframe(gcf);
             writeVideo(vid,frame);
         end
-        hold off;
         close(vid);
     else
         % Plot the ground track
+        figure('units','normalized','outerposition',[0 0 1 1])
+
         
-        figure('units','normalized','outerposition',[0 0 1 1]);
-        EarthPlot('ground');
-        hold on
+        image([0 360],[-90 90], flip(topo), 'CDataMapping', 'scaled')
+        colormap(topomap1)
+
+        axis equal                                % set axis units to be the same size
+
+        ax = gca;                                 % get current axis               
+        ax.XLim = [0 360];                        % set x limits
+        ax.YLim = [-90 90];                       % set y limits
+        ax.XTick = [0 60 120 180 240 300 360];    % define x ticks
+        ax.YTick = [-90 -60 -30 0 30 60 90];      % define y ticks
+        
+        ylabel('Latitude [deg]');
+        xlabel('Longitude [deg]');
+        title('Satellite Ground Track');
+        hold on;
+        
         for i = 1:length(Ri)
             scatter(RA(i),dec(i),'.r');
         end
