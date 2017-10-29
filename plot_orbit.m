@@ -37,9 +37,29 @@ function plot_orbit(h, e, i, omega, w, th, mu)
     t0 = [0 T0];
     
     %% Numerically solve for the orbit
-    [t,y] = ode45('orbit', t0, y0); 
+    [t,y] = ode45('orbit', t0, y0,'RelTol',1e-32); 
     
-    %% Plot Orbit 
+    %% Plot Orbit
+    load topo
+    
+    grs80 = referenceEllipsoid('grs80','km');
+        
+    figure('Renderer','opengl')
+    ax = axesm('globe','Geoid',grs80,'Grid','off', ...
+        'GLineWidth',1,'GLineStyle','-',...
+        'Gcolor',[0.9 0.9 0.1],'Galtitude',100);
+    ax.Position = [0 0 1 1];
+    axis equal off
+    view(0,23.5)
+
+    geoshow(topo,topolegend,'DisplayType','texturemap')
+    demcmap(topo)
+    land = shaperead('landareas','UseGeoCoords',true);
+    plotm([land.Lat],[land.Lon],'Color','black')
+    rivers = shaperead('worldrivers','UseGeoCoords',true);
+    plotm([rivers.Lat],[rivers.Lon],'Color','blue')
+    hold on
+    
     for i = 1:length(t)    
         plot3(y(1:i,1), y(1:i,2), y(1:i,3))    
         drawnow
