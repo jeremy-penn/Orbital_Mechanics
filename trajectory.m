@@ -35,7 +35,7 @@ function [Ri,Vi] = trajectory(R0,V0,dt,step,mu)
     Ri     = zeros(N,3);
     Vi     = zeros(N,3);
         while (t < dt)
-            [R, V] = UniversalLagrange(R0, V0, t,mu);
+            [R, V] = universal_lagrange(R0, V0, t,mu);
             Ri(ind,:) = R;
             Vi(ind,:) = V;
             ind = ind + 1;

@@ -20,7 +20,7 @@ function binary_plot(R0,V0,dt,step,m1,m2)
     %           o m2    - Mass of object 2 in solar mass
     %
     %% Calculate the trajectories
-    [rf1,rf2] = binaryTrajectory(R0,V0,m1,m2,dt,step);
+    [rf1,rf2] = binary_trajectory(R0,V0,m1,m2,dt,step);
     
     %% Plot Orbits
     
