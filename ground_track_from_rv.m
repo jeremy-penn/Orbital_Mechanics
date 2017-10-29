@@ -81,10 +81,8 @@ function ground_track_from_rv(R0, V0, n, mu, Re, J2, we)
     
     %% Plot the ground track
     figure('units','normalized','outerposition',[0 0 1 1])
-
-
-    image([0 360],[-90 90],flip(topo), 'CDataMapping', 'scaled')
-    colormap(topomap2)
+    map = imread('~/Documents/earth.jpg');
+    image([-180 180],[-90 90], map, 'CDataMapping','scaled');
 
     axis equal                                % set axis units to be the same size
 
@@ -98,8 +96,11 @@ function ground_track_from_rv(R0, V0, n, mu, Re, J2, we)
     ylabel('Latitude [deg]');
     xlabel('Longitude [deg]');
     title('Satellite Ground Track');
-    text(RA(1), dec(1), 'o Start')
-    text(RA(end), dec(end), 'o Finish')
+    ts = text(RA(1), dec(1), 'o Start','color','red');
+    tf = text(RA(end), dec(end), 'o Finish','color','red');
+    
+    ts.FontSize = 14;
+    tf.FontSize = 14;
     hold on;
 
     for i = 1:length(RA)

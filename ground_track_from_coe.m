@@ -59,7 +59,7 @@ function ground_track_from_coe(h, e, i, omega, w, theta, n, mu, Re, J2, we)
     tf = t0 + n*T;
    
     %% Calculate the RA and dec
-    timeint = linspace(t0,tf,100);
+    timeint = linspace(t0,tf,1000);
     ind = 1;
     
     for j = 1:length(timeint)
@@ -79,30 +79,40 @@ function ground_track_from_coe(h, e, i, omega, w, theta, n, mu, Re, J2, we)
         ind = ind + 1;
     end
     
+    %% Convert RA from 0 360 to -180 180
+    for k = 1:length(RA)
+        if RA(k) > 180
+            RA(k) = RA(k) - 360;
+        end
+    end
+            
+    
     %% Plot the ground track
     figure('units','normalized','outerposition',[0 0 1 1])
-
-
-    image([0 360],[-90 90],flip(topo), 'CDataMapping', 'scaled')
-    colormap(topomap2)
+    map = imread('~/Documents/earth.jpg');
+    image([-180 180],[-90 90], map, 'CDataMapping','scaled');
 
     axis equal                                % set axis units to be the same size
 
     ax = gca;                                 % get current axis               
-    ax.XLim = [0 360];                        % set x limits
+    ax.XLim = [-180 180];                        % set x limits
     ax.YLim = [-90 90];                       % set y limits
-    ax.XTick = [0 60 120 180 240 300 360];    % define x ticks
+    ax.XTick = [-180 -120 -60 0 60 120 180];    % define x ticks
     ax.YTick = [-90 -60 -30 0 30 60 90];      % define y ticks
     ax.YTickLabels= {'90N', '60N', '30N', '0', '30S', '60S', '90S'};
+    ax.XTickLabels= {'180W', '60W', '30W', '0', '30E', '60E', '180E'};
 
     ylabel('Latitude [deg]');
     xlabel('Longitude [deg]');
     title('Satellite Ground Track');
-    text(RA(1), dec(1), 'o Start')
-    text(RA(end), dec(end), 'o Finish')
+    ts = text(RA(1), dec(1), 'o Start','color','red');
+    tf = text(RA(end), dec(end), 'o Finish','color','red');
+    
+    ts.FontSize = 14;
+    tf.FontSize = 14;
     hold on;
 
     for i = 1:length(RA)
-        scatter(RA(i),dec(i),'.w');
+        scatter(RA(i),dec(i),'.r');
     end
 end
