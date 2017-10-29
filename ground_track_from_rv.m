@@ -4,7 +4,8 @@ function ground_track_from_rv(R0, V0, n, mu, Re, J2, we)
     % Jeremy Penn
     % 21 October 2017
     %
-    % Revision 21/10/17
+    % Revision: 21/10/17
+    %           29/10/2017 - Changed RA from 0:360 to -180:180
     %
     % function ground_track(R0, V0, dt, step, mu)
     %
@@ -14,11 +15,11 @@ function ground_track_from_rv(R0, V0, n, mu, Re, J2, we)
     % 
     % Inputs:   o R0    - A 1x3 vector of the satellite's initial position
     %           o V0    - A 1x3 vector of the satellite's initial velocity
-    %           o dt    - The final time in seconds [s]
-    %           o step  - The step sized used to determine how often to
-    %                     calculate position and velocity in seconds [s]
+    %           o n     - number of orbits
     %           o mu    - standard grav param [OPTIONAL]
     %           o Re    - central body radius [OPTIONAL]
+    %           o J2    - central body second zonal harmonic [OPTIONAL]
+    %           o we    - central body angular speed [OPTIONAL]
     %
     clc;
     if nargin == 2

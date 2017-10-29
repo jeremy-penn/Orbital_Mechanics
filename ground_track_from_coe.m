@@ -4,7 +4,8 @@ function ground_track_from_coe(h, e, i, omega, w, theta, n, mu, Re, J2, we)
     % Jeremy Penn
     % 21 October 2017
     %
-    % Revision 21/10/17
+    % Revision: 21/10/2017
+    %           29/10/2017 - Changed RA from 0:360 to -180:180
     %
     % function ground_track(R0, V0, dt, step, mu)
     %
@@ -12,13 +13,17 @@ function ground_track_from_coe(h, e, i, omega, w, theta, n, mu, Re, J2, we)
     %           geocentric frame of reference. Additionally, it creates a
     %           video of the ground track.
     % 
-    % Inputs:   o R0    - A 1x3 vector of the satellite's initial position
-    %           o V0    - A 1x3 vector of the satellite's initial velocity
-    %           o dt    - The final time in seconds [s]
-    %           o step  - The step sized used to determine how often to
-    %                     calculate position and velocity in seconds [s]
+    % Input:    o h     - Specific angular momentum
+    %           o e     - eccentricity
+    %           o i     - orbital inclination
+    %           o omega - right ascension of the ascending node
+    %           o w     - argument of perigee
+    %           o theta - true anomaly
+    %           o n     - number of orbits
     %           o mu    - standard grav param [OPTIONAL]
     %           o Re    - central body radius [OPTIONAL]
+    %           o J2    - central body second zonal harmonic [OPTIONAL]
+    %           o we    - central body angular speed [OPTIONAL]
     %
     clc;
     if nargin == 6
