@@ -30,7 +30,7 @@ function topo_to_geo(th, phi, A, a)
     r = Q*rho;
     
     %% Calculate the RA and Dec
-    [RA,Dec] = R2RA_Dec(r);
+    [RA,Dec] = ra_and_dec_from_r(r);
     
     fprintf('The RA of the object is %5.2f [deg]\n',RA)
     fprintf('The Dec of the object is %5.2f [deg]\n',Dec)

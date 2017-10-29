@@ -16,6 +16,9 @@ function [r , v] = rv_from_coe(h, e, i, omega, w, theta, mu)
     %           o theta - true anomaly
     %           o mu    - standard grav param [OPTIONAL]
     %
+    % Output:   o r     - The position vector
+    %           o v     - The velocity vector
+    %
     
     if nargin == 6
         mu = 398600;
