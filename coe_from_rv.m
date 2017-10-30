@@ -21,6 +21,13 @@ function [h, e, i, omega, w, theta] = coe_from_rv(R,V,mu)
     %           o mu - Standard gravitationl parameter of the central body
     %                  [OPTIONAL]. Defaults to Earth (398600 [km^3/s^2])
     %
+    % Output:   o h     - Specific angular momentum
+    %           o e     - eccentricity
+    %           o i     - orbital inclination
+    %           o omega - right ascension of the ascending node
+    %           o w     - argument of perigee
+    %           o theta - true anomaly
+    %
     
     clear r v vr H h i k N n E e omega w theta; clc;
     
