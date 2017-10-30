@@ -16,6 +16,7 @@ function F = hyp_anomaly(e, M)
     %
     % Outputs:  o F     - Hyperbolic anomaly [radians]
     %
+    
     clc; clear F;
     
     %% Initial guess

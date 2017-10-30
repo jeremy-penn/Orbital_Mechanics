@@ -13,7 +13,11 @@ function topo_to_geo(th, phi, A, a)
     %           o A     - The azimuth angle of the target [deg]
     %           o a     - The angular elevation of the object [deg]
     %
+    % Requires: ra_and_dec_from_r.m
     %
+    
+    clc;
+    
     %% Convert from degrees to radians
     th  = th * pi/180;
     phi = phi * pi/180;
@@ -32,6 +36,6 @@ function topo_to_geo(th, phi, A, a)
     %% Calculate the RA and Dec
     [RA,Dec] = ra_and_dec_from_r(r);
     
-    fprintf('The RA of the object is %5.2f [deg]\n',RA)
-    fprintf('The Dec of the object is %5.2f [deg]\n',Dec)
+    fprintf('The RA of the object in the Geocentric frame is %5.2f [deg]\n',RA)
+    fprintf('The Dec of the object in the Geocentric frame is %5.2f [deg]\n',Dec)
 end

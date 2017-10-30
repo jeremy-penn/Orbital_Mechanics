@@ -18,6 +18,8 @@ function r = rotation(R,th,phi,rho)
     %
     % Outputs:  o r     - The new vector after rotation.
     %
+    % Requires: rot1.m, rot2.m, rot3.m
+    %
 
     clear r; clc;
     
@@ -60,9 +62,9 @@ function r = rotation(R,th,phi,rho)
     
     %% Set up the rotation matrix
     
-    rotx = [1,0,0;0,cos(th),sin(th);0,-sin(th),cos(th)];
-    roty = [cos(phi),0,-sin(phi);0,1,0;sin(phi),0,cos(phi)];
-    rotz = [cos(rho),sin(rho),0;-sin(rho),cos(rho),0;0,0,1];
+    rotx = rot1(th);
+    roty = rot2(phi);
+    rotz = rot3(rho);
     
     %% Perform the rotation
     

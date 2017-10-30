@@ -19,6 +19,8 @@ function [r , v] = rv_from_coe(h, e, i, omega, w, theta, mu)
     % Output:   o r     - The position vector
     %           o v     - The velocity vector
     %
+    % Requires: rot1.m, rot3.m
+    %
     
     if nargin == 6
         mu = 398600;

@@ -20,13 +20,15 @@ function [fdot,gdot] = fdot_and_gdot(x, R0, r, a, mu)
     % Outputs:  o fdot - The fdot function.
     %           o gdot - The gdot function.
     %
+    % Requires: stumpff.m
+    %
     if nargin == 4
         mu = 398600;
     end
     
     r0 = norm(R0);
     z  = a*x^2;
-    [Cz,Sz] = Stumpff(z);
+    [Cz,Sz] = stumpff(z);
     
     fdot = (sqrt(mu)/(r*r0)) * ( a*x^3*Sz - x );
     gdot = 1 - (x^2/r) *Cz;

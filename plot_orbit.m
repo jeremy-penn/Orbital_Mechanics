@@ -19,6 +19,8 @@ function plot_orbit(h, e, i, omega, w, th, mu)
     %           o th    - true anomaly
     %           o mu    - standard grav param [OPTIONAL]
     %
+    % Requires: orbit.m, rv_from_coe.m
+    %
    
     clc;
     
@@ -61,7 +63,7 @@ function plot_orbit(h, e, i, omega, w, th, mu)
     hold on
     
     for i = 1:length(t)    
-        plot3(y(1:i,1), y(1:i,2), y(1:i,3))    
+        plot3(y(1:i,1), y(1:i,2), y(1:i,3),'color','red')    
         drawnow
     end 
 end

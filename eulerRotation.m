@@ -9,14 +9,15 @@ function eulerRotation(R, alpha, beta, gamma)
     %
     % function eulerRotation(R, alpha, beta, gamma)
     %
-    % Purpose:  This function plots the orbit of a satellite in the
-    %           geocentric frame of reference. Additionally, it creates a
-    %           video of the orbit.
+    % Purpose:  This function computes the Euler angle sequence about any 3
+    %           axis sequence.
     % 
     % Inputs:   o R     - A 1x3 vector of the satellite's initial position.
     %           o alpha - The primary Euler angle.
     %           o beta  - The secondary Euler angle.
     %           o gamma - The tertiary Euler angle.
+    %
+    % Requires: rot1.m, rot2.m, rot3.m
     %
     
     clear r; clc;

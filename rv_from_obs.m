@@ -21,6 +21,9 @@ function [r,v] = rv_from_obs(rho, A, a, drho, dA, da, H, th, phi)
     % Output:   o r     - The geocentric position vector
     %           o v     - The geocentric velocity vector
     %
+    % Requires: kepler_convert.m
+    %
+    
     %% Convert angles from degrees to radians
     A   = A * pi/180;
     a   = a * pi/180;
@@ -71,7 +74,7 @@ function [r,v] = rv_from_obs(rho, A, a, drho, dA, da, H, th, phi)
     v = Rdot + drho*rhohat + rho*rhohatdot;
     
     %% Calculate the orbital elements
-    kepler = keplerConvert(r,v);
+    kepler = kepler_convert(r,v);
     
     a       = kepler(1);
     e       = kepler(2);

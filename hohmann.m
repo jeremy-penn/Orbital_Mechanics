@@ -19,6 +19,7 @@ function hohmann(Ria,Rip,Rfa,Rfp,m, isp)
     %         o m     - The mass of the spacecraft before 1st manuveur [kg]
     %         o isp   - The specific impulse of the engine [s]
     %
+    
     clc;
     mu = 398600; %[km^3/s^2]
     g  = 9.807;  %[m/s^2]

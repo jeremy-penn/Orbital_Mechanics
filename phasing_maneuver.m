@@ -19,6 +19,7 @@ function phasing_maneuver(Ria,Rip,th,n,mu)
     %           o mu    - The standard grav parameter of the central body
     %                     [OPTIONAL]. Defaults to Earth [km^3/s^2].
     %
+    
     clc;
     if nargin == 3
         n =1;

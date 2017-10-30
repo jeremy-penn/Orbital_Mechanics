@@ -20,6 +20,8 @@ function [f,g] = f_and_g(x, R0, dt, a, mu)
     % Outputs:  o f - The f function.
     %           o g - The g function.
     %
+    % Requires: stumpff.m
+    %
     
     if nargin == 4
         mu = 398600;
@@ -27,7 +29,7 @@ function [f,g] = f_and_g(x, R0, dt, a, mu)
     
     r0 = norm(R0);
     z  = a*x^2;
-    [Cz,Sz] = Stumpff(z);
+    [Cz,Sz] = stumpff(z);
     
     f  = 1 - x^2/r0 * Cz;
     g  = dt - ( 1/sqrt(mu) )* x^3 * Sz;

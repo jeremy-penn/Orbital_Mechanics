@@ -19,6 +19,9 @@ function geocentric_track(R0, V0, dt, step,mu)
     %           o step - The step sized used to determine how often to
     %                    calculate position and velocity in seconds [s]
     %
+    % Requires: trajectory.m
+    %
+    
     load topo
     
     if nargin == 4

@@ -20,6 +20,8 @@ function [rf1,rf2] = binary_trajectory(R0,V0,m1,m2,dt,step)
     %           o m1    - Mass of object 1 in solar mass
     %           o m2    - Mass of object 2 in solar mass
     %
+    % Requires: universal_lagrange.m
+    %
     
     clc; clear R V t ind RedMassN rf1 rf2;
     
@@ -34,7 +36,7 @@ function [rf1,rf2] = binary_trajectory(R0,V0,m1,m2,dt,step)
     rf1     = zeros(N,3);               %[km] Final Position of m1
     rf2     = zeros(N,3);               %[km] Final Position of m2
         while (t < dt)
-            [R, V] = UniversalLagrange(R0, V0, t, mu);
+            [R, V] = universal_lagrange(R0, V0, t, mu);
             rf1(ind,:) = (RedMass/m1)*R;
             rf2(ind,:) = -(RedMass/m2)*R;
             ind = ind + 1;

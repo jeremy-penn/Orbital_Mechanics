@@ -23,6 +23,10 @@ function ground_track_from_rv(R0, V0, n, mu, Re, J2, we)
     %           o J2    - central body second zonal harmonic [OPTIONAL]
     %           o we    - central body angular speed [OPTIONAL]
     %
+    % Requires: ecc_anomaly_from_ta.m, ecc_anomaly_from_M.m, ta_from_E.m,
+    %           rv_from_coe.m, rot3.m, ra_and_dec_from_r.m, coe_from_rv.m
+    %
+    
     clc;
     if nargin == 2
         n = 1;

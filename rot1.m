@@ -11,7 +11,7 @@ function rot1 = rot1(th)
     % Purpose:  This function calculates the rotation matrix about the
     %           x-axis
     % 
-    % Inputs:   o th - The rotation angle.
+    % Inputs:   o th - The rotation angle. [rad]
     % 
     % Output:   o rot1 - Rotation matrix about the x-axis.
     %

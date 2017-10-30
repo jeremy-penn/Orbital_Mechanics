@@ -27,6 +27,10 @@ function [a,i,e,omega,w,theta] = gibbs(R1,R2,R3,mu)
     %           o w     - argument of perigee
     %           o theta - true anomaly
     %
+    % Requires: kepler_convert.m
+    %
+    
+    
     clc;
     if nargin == 3
         mu = 398600;
@@ -69,7 +73,7 @@ function [a,i,e,omega,w,theta] = gibbs(R1,R2,R3,mu)
     
     %% Calculate the orbital elements from r2 and v2
     
-    kepler = keplerConvert(R2,V2);
+    kepler = kepler_convert(R2,V2);
     
     a       = kepler(1);
     e       = kepler(2);

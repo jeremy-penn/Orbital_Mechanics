@@ -23,6 +23,9 @@ function [Ri,Vi] = trajectory(R0,V0,dt,step,mu)
     % Output:   o Ri - A matrix of the calculated positions
     %           o Vi - A matrix of the calculated velocities
     %
+    % Requires: universal_lagrange.m
+    %
+    
     clc; clear R V Long Lat t ind Ri;
     
     if nargin == 4
