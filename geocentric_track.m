@@ -31,11 +31,11 @@ function geocentric_track(R0, V0, dt, step,mu)
     [Ri,Vi] = trajectory(R0,V0,dt,step,mu);
     
     %% Instantiate Movie Maker
-    str = input('Would you like a movie?\n','s');
+    str = input('Would you like an animation?\n','s');
     
     if strcmpi(str,'y') || strcmpi(str,'yes')
         movName = input('Please name the movie\n','s');
-        con     = strcat('~/Documents/matlab/movie/',movName);
+        con     = strcat('~/Documents/matlab/animation/',movName);
         vid = VideoWriter(con,'MPEG-4');
         open(vid);
         

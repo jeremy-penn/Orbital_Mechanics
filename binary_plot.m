@@ -30,8 +30,9 @@ function binary_plot(R0,V0,dt,step,m1,m2)
     
     switch str
         case 'y'
-            name = input('Please name output movie\n','s');
-            vid = VideoWriter(name);
+            name = input('Please name output animation\n','s');
+            con     = strcat('~/Documents/matlab/animation/',name);
+            vid = VideoWriter(con);
             open(vid);
             set(gcf,'color','black');
             whitebg('black');
@@ -50,8 +51,9 @@ function binary_plot(R0,V0,dt,step,m1,m2)
             hold off;
             close(vid);
         case 'yes'
-            name = input('Please name output movie\n','s');
-            vid = VideoWriter(name);
+            name = input('Please name output animation\n','s');
+            con     = strcat('~/Documents/matlab/animation/',name);
+            vid = VideoWriter(con);
             open(vid);
             set(gcf,'color','black');
             whitebg('black');
