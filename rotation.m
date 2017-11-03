@@ -1,5 +1,5 @@
 function r = rotation(R,th,phi,rho)
-    %% Coordinate Rotation about each axis
+    %% Coordinate Rotation once about each axis
     %
     % Jeremy Penn
     % 18 October 2017
