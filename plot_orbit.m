@@ -19,7 +19,7 @@ function plot_orbit(h, e, i, omega, w, th, mu)
     %           o th    - true anomaly
     %           o mu    - standard grav param [OPTIONAL]
     %
-    % Requires: orbit.m, rv_from_coe.m
+    % Requires: rv_from_coe.m
     %
     
     clc;
