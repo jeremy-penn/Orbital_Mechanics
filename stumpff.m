@@ -4,7 +4,7 @@ function [Cz, Sz] = stumpff(z)
     % Jeremy Penn
     % 22 September 2017
     %
-    % Revision 19/10/17
+    % Revision:19/10/17
     %
     % function [Cz, Sz] = Stumpff(z)
     %
