@@ -53,9 +53,9 @@ function hohmann(Ria,Rip,Rfa,Rfp,m, isp)
     deltam = m*(1 - exp(-(deltav /(isp*g))));
     newm   = m - deltam;
     
-    fprintf('The delta-v requirement for Hohmann insertion is %8.2f [m/s]\n', va)
-    fprintf('The delta-v requirement for Hohmann breaking is %8.2f [m/s]\n', vb)
-    fprintf('The total delta-v requirement for Hohmann transfer is %8.2f [m/s]\n', deltav)
-    fprintf('The mass of the propellant expended is %5.2f [kg]\n', deltam)
-    fprintf('The new mass of the vessel is %5.2f [kg]\n',newm)
+    fprintf('The delta-v requirement for Hohmann insertion is %.2f [m/s]\n', va)
+    fprintf('The delta-v requirement for Hohmann breaking is %.2f [m/s]\n', vb)
+    fprintf('The total delta-v requirement for Hohmann transfer is %.2f [m/s]\n', deltav)
+    fprintf('The mass of the propellant expended is %.2f [kg]\n', deltam)
+    fprintf('The new mass of the vessel is %.2f [kg]\n',newm)
 end
