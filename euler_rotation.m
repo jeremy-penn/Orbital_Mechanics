@@ -19,34 +19,13 @@ function euler_rotation(R, alpha, beta, gamma)
     %
     % Requires: rot1.m, rot2.m, rot3.m
     %
+    clc;
     
-    clear r; clc;
     %% Check the angles are between 0 and 360
-    
-    while alpha > 360
-        alpha = alpha - 360;
-    end
-    
-    while beta > 360
-        beta = beta - 360;
-    end
-    
-    while gamma > 360
-        gamma = gamma - 360;
-    end
-    
-    while alpha < 0
-        alpha = 360 + alpha;
-    end
-    
-    while beta < 0
-        beta = 360 + beta;
-    end
-    
-    while gamma < 0
-        gamma = 360 + gamma;
-    end
-    
+    alpha = mod(alpha, 360);
+    beta = mod(beta, 360);
+    gamma = mod(gamma, 360);
+
     %% Convert to radians
     
     alpha = alpha * pi/180;
@@ -184,8 +163,8 @@ function euler_rotation(R, alpha, beta, gamma)
     end
     %% Display the results
     
-    fprintf('The new x-coordinate is %4.2f\n',r(1))
-    fprintf('The new y-coordinate is %4.2f\n',r(2))
-    fprintf('The new z-coordinate is %4.2f\n',r(3))
+    fprintf('The new x-coordinate is %.2f\n',r(1))
+    fprintf('The new y-coordinate is %.2f\n',r(2))
+    fprintf('The new z-coordinate is %.2f\n',r(3))
 end
 

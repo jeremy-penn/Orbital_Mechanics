@@ -19,8 +19,8 @@ function phasing_maneuver(Ria,Rip,th,n,mu)
     %           o mu    - The standard grav parameter of the central body
     %                     [OPTIONAL]. Defaults to Earth [km^3/s^2].
     %
-    
     clc;
+    
     if nargin == 3
         n =1;
         mu = 398600; %[km^3/s^2]
@@ -29,14 +29,9 @@ function phasing_maneuver(Ria,Rip,th,n,mu)
     if nargin == 4
         mu = 398600; %[km^3/s^2]
     end
-    %% Confirm th is between 0 and 360
-    while th < 0
-        th = 360 + th;
-    end
     
-    while th > 360
-        th = th - 360;
-    end
+    %% Confirm th is between 0 and 360
+    th = mod(th,360);
     
     %% Convert deg to rad
     th = th * (pi/180);

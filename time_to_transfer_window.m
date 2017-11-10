@@ -19,14 +19,7 @@ function time_to_transfer_window(phi, n1, n2, t12)
     %
     clc;
     
-    while phi < 0
-        phi = phi + 360;
-    end
-    
-    while phi > 360
-        phi = phi - 360;
-    end
-    
+    phi = mod(phi, 360);
     phi = phi * pi/180;
     
     %% calculate phase angle for transfer

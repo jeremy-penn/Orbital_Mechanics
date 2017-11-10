@@ -1,13 +1,7 @@
 function th = ta_from_E(E, e)
     %% Calculates the true anomaly [deg] from the eccentric anomaly [deg]
     
-    while E > 360
-        E = E - 360;
-    end
-    
-    while E < 0
-        E = E + 360;
-    end
+    E = mod(E, 360);
     
     E = E * (pi/180);
    
@@ -15,13 +9,7 @@ function th = ta_from_E(E, e)
     
     theta = theta * (180/pi);
     
-    while theta > 360
-        theta = theta - 360;
-    end
-    
-    while theta < 0
-        theta = theta + 360;
-    end
+    theta = mod(theta, 360);
     
     th = theta;
 end

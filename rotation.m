@@ -24,30 +24,9 @@ function r = rotation(R,th,phi,rho)
     clear r; clc;
     
     %% Make sure angles are between 0 and 360
-    
-    while th > 360
-        th = th - 360;
-    end
-    
-    while phi > 360
-        phi = phi - 360;
-    end
-    
-    while rho > 360
-        rho = rho - 360;
-    end
-    
-    while th < 0
-        th = 360 + th;
-    end
-    
-    while phi < 0
-        phi = 360 + phi;
-    end
-    
-    while rho < 0
-        rho = 360 + rho;
-    end
+    th = mod(th,360);
+    phi = mod(phi,360);
+    rho = mod(rho,360);
     
     %% Convert degrees to radians
     th = th * pi/180;

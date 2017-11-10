@@ -27,37 +27,10 @@ function [r , v] = rv_from_coe(h, e, i, omega, w, theta, mu)
     end
     
     %% Confirm angles are between 0 and 360
-    while i < 0
-        i = 360 + i;
-    end
-    
-    while i > 360
-        i = i - 360;
-    end
-    
-    while omega < 0
-        omega = 360 + omega;
-    end
-    
-    while omega > 360
-        omega = omega - 360;
-    end
-    
-    while w < 0
-        w = 360 + w;
-    end
-    
-    while w > 360
-        w = w - 360;
-    end
-    
-    while theta < 0
-        theta = 360 + theta;
-    end
-    
-    while theta > 360
-        theta = theta - 360;
-    end
+    i     = mod(i, 360);
+    omega = mod(omega, 360);
+    w     = mod(w, 360);
+    theta = mod(theta, 360);
     
     %% Convert deg to rad
     dtor    = pi/180;
