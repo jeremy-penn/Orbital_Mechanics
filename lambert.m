@@ -4,7 +4,7 @@ function lambert(R1, R2, dt,guess, tolerance, grav)
     % Jeremy Penn
     % 04 November 2017
     %
-    % Revision:04/11/17
+    % Revision: 04/11/17
     %
     % function lambert(R1, R2, dt,guess, tolerance, grav)
     %
@@ -86,37 +86,10 @@ function lambert(R1, R2, dt,guess, tolerance, grav)
     %% Calculate the classical orbital elements
     [h, e, i, W, w, th] = coe_from_rv(R1,v1);
     
-    while i > 360
-        i = i - 360;
-    end
-    
-    while W > 360
-        W = W - 360;
-    end
-    
-    while w > 360
-        w = w - 360;
-    end
-    
-    while th > 360
-        th = th - 360;
-    end
-    
-    while i < 0
-        i = i + 360;
-    end
-    
-    while W < 0
-        W = W + 360;
-    end
-    
-    while w < 0
-        w = w + 360;
-    end
-    
-    while th < 0
-        th = th + 360;
-    end
+    i  = mod(i, 360);
+    W  = mod(W, 360);
+    w  = mod(w, 360);
+    th = mod(th, 360);
     
     fprintf('The specific angular momentum is %.2f [km^2/s]\n', h)
     fprintf('The eccentricity is %.4f\n', e)
