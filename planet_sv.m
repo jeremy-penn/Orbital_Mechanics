@@ -1,10 +1,12 @@
-function [R, V] = planet_sv(planet_id, d, m, y, UT)
+function [R, V, jd] = planet_sv(planet_id, d, m, y, UT)
     %% Calculate the sidereal time from the given date and UT time
     %
     % Jeremy Penn
     % 09 November 2017
     %
     % Revision  09/11/17
+    %           11/11/2017 - Added jd output for use with
+    %                        interplanetary_trajectory.m
     %           
     % function [R, V] = planet_sv(planet_id, d, m, y, UT)
     %
@@ -18,6 +20,7 @@ function [R, V] = planet_sv(planet_id, d, m, y, UT)
     %
     % Outputs:  o R     - The heliocentric position
     %           o V     - The heloiocentric velocity
+    %           o jd    - The Julian Day (J2000 epoch) 
     %
     clc;
     

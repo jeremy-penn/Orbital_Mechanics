@@ -1,8 +1,10 @@
-function time_of_transfer(R1, R2, mu)
+function time = time_of_transfer(R1, R2, mu)
     %% Calculate the wait time after Hohmann transfer for return transfer
     %
     % Jeremy Penn
     % 06/11/17
+    %
+    % Output:   otime - transfer flight time [s]
     %
     clc;
     
