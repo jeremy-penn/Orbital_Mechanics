@@ -42,10 +42,10 @@ function interplanetary_trajectory()
     
     UT1 = hr1 + min1/60 + sec1/3600;
     
-    r_d = input('Input the perigee radius of the parking orbit:\n ');
+    r_d = input('Input the perigee radius of the parking orbit (km):\n ');
     e_d = input('Input the eccentricity of the parking orbit:\n ');
     
-    r_a = input('Input the perigee radius of the capture orbit:\n ');
+    r_a = input('Input the perigee radius of the capture orbit (km):\n ');
     e_a = input('Input the eccentricity of the capture orbit:\n ');
     
     date2 = input('Input the arrival date (dd/mm/yyyy):\n','s');
@@ -126,6 +126,15 @@ function interplanetary_trajectory()
     v_a_c = sqrt( (mu_a/ra) * (1 + e_a));
     
     delta_va = v_a_p - v_a_c;
+    
+    %% plot the transfer orbit
+    theta_plot = linspace(0,2*pi);
+    r = h^2/mu .* (1 ./ (1 + e* cos(theta_plot)));
+    
+    polarplot(theta_plot,r);
+    title('Interplanetary Orbital Trajectory')
+    text(theta_plot(1), r(1), 'o departure','color','black','FontWeight','bold');
+    text(theta_plot(end/2), r(end/2), 'o arrival','color','black','FontWeight','bold');
     
     %% print the results
     %{
