@@ -12,7 +12,7 @@ function interplanetary_trajectory()
     % Purpose:  This function calculates the interplanety trajectory orbit
     %           as well as delta-v and ejection/capture angles.
     %
-    % Required: planet_sv.m, lambert.m, coe_from_rv.m
+    % Required: planet_sv.m, lambert.m, coe_from_rv.m, planet_select.m
     %
     clc;
     
@@ -26,13 +26,21 @@ function interplanetary_trajectory()
     planet2 = input('Input the target planet:\n','s');
     planet2 = lower(planet2);
     
-    date1 = input('Input the departure date & time (dd/mm/yyyy/tt & 24-hour clock):\n','s');
+    date1 = input('Input the departure date (dd/mm/yyyy):\n','s');
+    time1 = input('Input the departure time (HH:MM:SS):\n','s');
     split1 = strsplit(date1, '/');
     
     d1 = str2double(split1{1});
     m1 = str2double(split1{2});
     y1 = str2double(split1{3});
-    UT1 = str2double(split1{4});
+    
+    split_t1 = strsplit(time1, ':');
+    
+    hr1 = str2double(split_t1{1});
+    min1 = str2double(split_t1{2});
+    sec1 = str2double(split_t1{3});
+    
+    UT1 = hr1 + min1/60 + sec1/3600;
     
     r_d = input('Input the perigee radius of the parking orbit:\n ');
     e_d = input('Input the eccentricity of the parking orbit:\n ');
@@ -40,13 +48,20 @@ function interplanetary_trajectory()
     r_a = input('Input the perigee radius of the capture orbit:\n ');
     e_a = input('Input the eccentricity of the capture orbit:\n ');
     
-    date2 = input('Input the arrival date & time (dd/mm/yyyy/tt & 24-hour clock):\n','s');
+    date2 = input('Input the arrival date (dd/mm/yyyy):\n','s');
+    time2 = input('Input the arrival time (HH:MM:SS):\n','s');
     split2 = strsplit(date2, '/');
+    split_t2 = strsplit(time2,':');
     
     d2 = str2double(split2{1});
     m2 = str2double(split2{2});
     y2 = str2double(split2{3});
-    UT2 = str2double(split2{4});
+   
+    hr2 = str2double(split_t2{1});
+    min2 = str2double(split_t2{2});
+    sec2 = str2double(split_t2{3});
+    
+    UT2 = hr2 + min2/60 + sec2/3600;
     
     %% calculate the state vector of planet 1 at departure
     [R1, V1, jd1] = planet_sv(planet1, d1, m1, y1, UT1);
@@ -79,72 +94,17 @@ function interplanetary_trajectory()
     
     %% calculate the ejection angle
     
-    % find the grav parameter of the departing planet
-    switch planet1
-        case 'mercury'
-            mu_d = 22030;
-            Rd = 2440;
-        case 'venus'
-            mu_d = 324900;
-            Rd = 6052;
-        case 'earth'
-            mu_d = 398600;
-            Rd = 6378;
-        case 'mars'
-            mu_d = 42828;
-            Rd = 3396;
-        case 'jupiter'
-            mu_d = 126686000;
-            Rd = 71490;
-        case 'saturn'
-            mu_d = 37931000;
-            Rd = 60270;
-        case 'uranus'
-            mu_d = 5794000;
-            Rd = 25560;
-        case 'neptune'
-            mu_d = 6835100;
-            Rd = 24760;
-        case 'pluto'
-            mu_d = 830;
-            Rd = 1195;
-        otherwise
-            error('Error: selected planet not available. Please try again.')
-    end
+    % gather the grav param and radius of the two bodies
+    data_d = planet_select(planet1);
+    data_a = planet_select(planet2);
     
-    switch planet2
-        case 'mercury'
-            mu_a = 22030;
-            Ra = 2440;
-        case 'venus'
-            mu_a = 324900;
-            Ra = 6052;
-        case 'earth'
-            mu_a = 398600;
-            Ra = 6378;
-        case 'mars'
-            mu_a = 42828;
-            Ra = 3396;
-        case 'jupiter'
-            mu_a = 126686000;
-            Ra = 71490;
-        case 'saturn'
-            mu_a = 37931000;
-            Ra = 60270;
-        case 'uranus'
-            mu_a = 5794000;
-            Ra = 25560;
-        case 'neptune'
-            mu_a = 6835100;
-            Ra = 24760;
-        case 'pluto'
-            mu_a = 830;
-            Ra = 1195;
-        otherwise
-            error('Error: selected planet not available. Please try again.')
-    end
+    mu_d   = data_d(9);
+    Rd     = data_d(1);
     
-    rd = Rd + r_d; 
+    mu_a   = data_a(9);
+    Ra     = data_a(1);
+    
+    rd = Rd + r_d;
     e_h = 1 + rd*speed_inf_D^2 / mu_d; % ecc of hyperbolic ejection traj
     
     beta_d = acos(1/e_h)*180/pi;
@@ -168,6 +128,7 @@ function interplanetary_trajectory()
     delta_va = v_a_p - v_a_c;
     
     %% print the results
+    %{
     dd = num2str(d1);
     md = num2str(m1);
     yd = num2str(y1);
@@ -178,18 +139,25 @@ function interplanetary_trajectory()
     
     date_depart = strcat(dd,'/',md,'/',yd);
     date_arrive = strcat(da,'/',ma,'/',ya);
-    
+    %}
     planet_d = replace(planet1,planet1(1),upper(planet1(1)));
     planet_a = replace(planet2,planet2(1),upper(planet2(1)));
     
+    date_vec_d = [y1, m1, d1, hr1, min1, sec1];
+    date_d_str = datestr(date_vec_d,'dd/mm/yyyy at HH:MM:SS UT');
+    date_vec   = [y2, m2, d2, hr2, min2, sec2];
+    date_a_str = datestr(date_vec,'dd/mm/yyyy at HH:MM:SS UT');
+    
     disp('---------------------------------------------------------------')
-    fprintf('The state vector for %s on %s: \n', planet_d,date_depart);
+    dda = sprintf('The state vector for %s on %s: \n',planet_d, date_d_str);
+    fprintf(dda)
     disp('---------------------------------------------------------------')
     fprintf('\t r_d = %.4e*i + %.4e*j + %.4e*k [km]\n',R1)
     fprintf('\t v_d = %.4f*i + %.4f*j + %.4f*k [km/s]\n',V1)
     
     disp('---------------------------------------------------------------')
-    fprintf('The state vector for %s on %s: \n', planet_a,date_arrive);
+    ada = sprintf('The state vector for %s on %s: \n', planet_a,date_a_str);
+    fprintf(ada)
     disp('---------------------------------------------------------------')
     fprintf('\t r_a = %.4e*i + %.4e*j + %.4e*k [km]\n',R2)
     fprintf('\t v_a = %.4f*i + %.4f*j + %.4f*k [km/s]\n',V2)
@@ -213,6 +181,9 @@ function interplanetary_trajectory()
     fprintf('\t speed_d = %.4f [km/s]\n',speed_inf_D);
     fprintf('\t V_inf_A = %.4f*i + %.4f*j + %.4f*k [km/s]\n',V_inf_A);
     fprintf('\t speed_a = %.4f [km/s]\n',speed_inf_A);
+    date_arrive = datestr(date_vec,'dd/mm/yyyy at HH:MM:SS UT');
+    da = sprintf('\t The spacecraft will arrive on %s\n', date_arrive);
+    fprintf(da)
     
     disp('---------------------------------------------------------------')
     disp('The injection elements: ')

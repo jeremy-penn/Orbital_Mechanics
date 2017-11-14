@@ -1,34 +1,40 @@
-function date_after_transfer()
+function date_vec = date_after_transfer(print_out, d, m, y, in_h, in_m, in_s, days)
     
-    %% calculates the date of arrival after a interplanetary transfer
+    %% calculates the date of arrival after an interplanetary transfer
     %
     % Jeremy Penn
     % 12/11/17
     %
     % function date_after_transfer()
     %
+    % Input: o print_out - A string to decide whether to print to screen.
+    %                      Leave blank to print-to-screen.
+    %
     clc;
     
-    %% Inputs
-    date = input('Input the departure date (dd/mm/yyyy/):\n','s');
-    split = strsplit(date, '/');
-    
-    d = str2double(split{1});
-    m = str2double(split{2});
-    y = str2double(split{3});
-    
-    time = input('input the time of departure (HH:MM:SS UT) [s]:\n','s');
-    split_time = strsplit(time, ':');
-    
-    in_h = str2double(split_time{1});
-    in_m = str2double(split_time{2});
-    in_s = str2double(split_time{3});
-    
-    time_h = in_s/3600 + in_m/60 + in_h;
-    
-    days = input('Length of transfer (days, use fractions of a day):\n');
+    if nargin == 0
+        print_out = 'yes';
+        
+        %% Inputs
+        date = input('Input the departure date (dd/mm/yyyy/):\n','s');
+        split = strsplit(date, '/');
+        
+        d = str2double(split{1});
+        m = str2double(split{2});
+        y = str2double(split{3});
+        
+        time = input('input the time of departure (HH:MM:SS UT) [s]:\n','s');
+        split_time = strsplit(time, ':');
+        
+        in_h = str2double(split_time{1});
+        in_m = str2double(split_time{2});
+        in_s = str2double(split_time{3});
+        
+        days = input('Length of transfer (days, use fractions of a day):\n');
+    end
     
     %% calculate the new date
+    time_h = in_s/3600 + in_m/60 + in_h;
     
     % convert to total days
     if mod(y, 4) == 0
@@ -92,10 +98,12 @@ function date_after_transfer()
     
     date_vec = [y, mm, arrive_d, hr, min, sec];
     
-    date_arrive = datestr(date_vec,'dd/mm/yyyy at HH:MM:SS UT');
-    
-    da = sprintf('The spacecraft will arrive on %s', date_arrive);
-    
-    fprintf(da)
-    disp(' ')
+    if strcmp(print_out,'yes')
+        date_arrive = datestr(date_vec,'dd/mm/yyyy at HH:MM:SS UT');
+        
+        da = sprintf('The spacecraft will arrive on %s', date_arrive);
+        
+        fprintf(da)
+        disp(' ')
+    end
 end

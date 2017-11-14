@@ -4,7 +4,11 @@ function time = time_of_transfer(R1, R2, mu)
     % Jeremy Penn
     % 06/11/17
     %
-    % Output:   otime - transfer flight time [s]
+    % Input:    o R1    - The orbital semimajor axis of the departing planet
+    %           o R2    - The orbital semimajor axis of the arrival planet
+    %           o mu    - grav parameter [OPTIONAL]
+    %
+    % Output:   o time - transfer flight time [s]
     %
     clc;
     
@@ -16,7 +20,4 @@ function time = time_of_transfer(R1, R2, mu)
     %% calculate the transfer time
     time = (pi/sqrt(mu)) * ( (R1 + R2)/2 )^1.5; %[s]
     
-    %% convert to days and print
-    t = time / 86400;
-    fprintf('The transfer will take %.2f days\n', t)
 end

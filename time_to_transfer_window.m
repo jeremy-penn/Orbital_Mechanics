@@ -19,6 +19,21 @@ function time_to_transfer_window(phi, n1, n2, t12)
     %
     clc;
     
+    %% select the two planets
+    dep_planet = input('Input the depature planet:\n','s');
+    arr_planet = input('Input the arrival planet:\n','s');
+    
+    dep_planet_data = planet_select(dep_planet);
+    arr_planet_data = planet_select(arr_planet);
+    
+    if nargin == 0
+        phi = input('Input the current phase angle between the departure and arrival planets (deg):\n');
+        n1  = (2*pi)/dep_planet_data(8);
+        n2  = (2*pi)/arr_planet_data(8);
+        t12 = time_of_transfer(dep_planet_data(5), arr_planet_data(5));
+        t12 = t12 / 86400; % convert to days
+    end
+    
     phi = mod(phi, 360);
     phi = phi * pi/180;
     
