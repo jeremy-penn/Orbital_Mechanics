@@ -10,7 +10,6 @@ function date_vec = date_after_transfer(print_out, d, m, y, in_h, in_m, in_s, da
     % Input: o print_out - A string to decide whether to print to screen.
     %                      Leave blank to print-to-screen.
     %
-    clc;
     
     if nargin == 0
         print_out = 'yes';
@@ -23,7 +22,7 @@ function date_vec = date_after_transfer(print_out, d, m, y, in_h, in_m, in_s, da
         m = str2double(split{2});
         y = str2double(split{3});
         
-        time = input('input the time of departure (HH:MM:SS UT) [s]:\n','s');
+        time = input('input the time of departure (HH:MM:SS UT):\n','s');
         split_time = strsplit(time, ':');
         
         in_h = str2double(split_time{1});

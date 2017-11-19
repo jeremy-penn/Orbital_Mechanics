@@ -6,15 +6,16 @@ function interplanetary_trajectory()
     %
     % Revision  11/11/2017
     %           12/11/2017 - added calculation of dv and beta angles
+    %           19/11/2017 - improved date functionality
     %
     % function interplanetary_trajectory()
     %
     % Purpose:  This function calculates the interplanety trajectory orbit
     %           as well as delta-v and ejection/capture angles.
     %
-    % Required: planet_sv.m, lambert.m, coe_from_rv.m, planet_select.m
+    % Required: planet_sv.m, lambert.m, coe_from_rv.m, planet_select.m,
+    %            date_after_transfer.m
     %
-    clc;
     
     %% constants
     mu = 132.71e9;  % [km^3/s^2]
@@ -28,6 +29,7 @@ function interplanetary_trajectory()
     
     date1 = input('Input the departure date (dd/mm/yyyy):\n','s');
     time1 = input('Input the departure time (HH:MM:SS):\n','s');
+    days  = input('Input the length of the transfer orbit (days, use fractions if necessary):\n');
     split1 = strsplit(date1, '/');
     
     d1 = str2double(split1{1});
@@ -48,26 +50,14 @@ function interplanetary_trajectory()
     r_a = input('Input the perigee radius of the capture orbit (km):\n ');
     e_a = input('Input the eccentricity of the capture orbit:\n ');
     
-    date2 = input('Input the arrival date (dd/mm/yyyy):\n','s');
-    time2 = input('Input the arrival time (HH:MM:SS):\n','s');
-    split2 = strsplit(date2, '/');
-    split_t2 = strsplit(time2,':');
-    
-    d2 = str2double(split2{1});
-    m2 = str2double(split2{2});
-    y2 = str2double(split2{3});
-   
-    hr2 = str2double(split_t2{1});
-    min2 = str2double(split_t2{2});
-    sec2 = str2double(split_t2{3});
-    
-    UT2 = hr2 + min2/60 + sec2/3600;
+    date_vec_i = date_after_transfer('no', d1, m1, y1, hr1, min1, sec1, days);
+    UT2 = date_vec_i(4) + date_vec_i(5)/60 + date_vec_i(6)/3600;
     
     %% calculate the state vector of planet 1 at departure
     [R1, V1, jd1] = planet_sv(planet1, d1, m1, y1, UT1);
     
     %% calculate the state vector of planet 2 at arrival
-    [R2, V2, jd2] = planet_sv(planet2, d2, m2, y2, UT2);
+    [R2, V2, jd2] = planet_sv(planet2, date_vec_i(3), date_vec_i(2), date_vec_i(1), UT2);
     
     %% calculate the flight time
     t12 = jd2 - jd1;
@@ -128,52 +118,44 @@ function interplanetary_trajectory()
     delta_va = v_a_p - v_a_c;
     
     %% plot the transfer orbit
-    theta_plot = linspace(0,2*pi);
+    [ha,ea,ia,Wa,wa,th_a] = coe_from_rv(R2, V2, mu);
+    theta_plot = linspace(0,th_a*pi/180);
     r = h^2/mu .* (1 ./ (1 + e* cos(theta_plot)));
     
     polarplot(theta_plot,r);
     title('Interplanetary Orbital Trajectory')
     text(theta_plot(1), r(1), 'o departure','color','black','FontWeight','bold');
-    text(theta_plot(end/2), r(end/2), 'o arrival','color','black','FontWeight','bold');
+    text(theta_plot(end), r(end), 'o arrival','color','black','FontWeight','bold');
     
     %% print the results
-    %{
-    dd = num2str(d1);
-    md = num2str(m1);
-    yd = num2str(y1);
     
-    da = num2str(d2);
-    ma = num2str(m2);
-    ya = num2str(y2);
-    
-    date_depart = strcat(dd,'/',md,'/',yd);
-    date_arrive = strcat(da,'/',ma,'/',ya);
-    %}
     planet_d = replace(planet1,planet1(1),upper(planet1(1)));
     planet_a = replace(planet2,planet2(1),upper(planet2(1)));
     
     date_vec_d = [y1, m1, d1, hr1, min1, sec1];
     date_d_str = datestr(date_vec_d,'dd/mm/yyyy at HH:MM:SS UT');
-    date_vec   = [y2, m2, d2, hr2, min2, sec2];
-    date_a_str = datestr(date_vec,'dd/mm/yyyy at HH:MM:SS UT');
+    %date_vec   = [y2, m2, d2, hr2, min2, sec2];
+    date_a_str = datestr(date_vec_i,'dd/mm/yyyy at HH:MM:SS UT');
     
-    disp('---------------------------------------------------------------')
+    clc;
+    
+    fprintf('\n\n---------------------------------------------------------------\n')
     dda = sprintf('The state vector for %s on %s: \n',planet_d, date_d_str);
     fprintf(dda)
-    disp('---------------------------------------------------------------')
+    fprintf('---------------------------------------------------------------\n')
     fprintf('\t r_d = %.4e*i + %.4e*j + %.4e*k [km]\n',R1)
     fprintf('\t v_d = %.4f*i + %.4f*j + %.4f*k [km/s]\n',V1)
     
-    disp('---------------------------------------------------------------')
+    fprintf('---------------------------------------------------------------\n')
     ada = sprintf('The state vector for %s on %s: \n', planet_a,date_a_str);
     fprintf(ada)
-    disp('---------------------------------------------------------------')
+    fprintf('---------------------------------------------------------------\n')
     fprintf('\t r_a = %.4e*i + %.4e*j + %.4e*k [km]\n',R2)
     fprintf('\t v_a = %.4f*i + %.4f*j + %.4f*k [km/s]\n',V2)
     
-    disp('---------------------------------------------------------------')
-    disp('The orbital elements of the transfer trajectory: ')
-    disp('---------------------------------------------------------------')
+    fprintf('---------------------------------------------------------------\n')
+    fprintf('The orbital elements of the transfer trajectory: \n')
+    fprintf('---------------------------------------------------------------\n')
     fprintf('\t h    = %.4e [km^2/s]\n',h)
     fprintf('\t e    = %.4f\n',e)
     fprintf('\t i    = %.4f [deg]\n',inc)
@@ -182,27 +164,27 @@ function interplanetary_trajectory()
     fprintf('\t th_d = %.4f [deg]\n',theta)
     fprintf('\t a    = %.4e [km]\n',a)
     
-    disp('---------------------------------------------------------------')
-    disp('The transfer elements: ')
-    disp('---------------------------------------------------------------')
-    fprintf('\t t12     = %.2f [days]\n',t12/86400);
+    fprintf('---------------------------------------------------------------\n')
+    fprintf('The transfer elements: \n')
+    fprintf('---------------------------------------------------------------\n')
+    fprintf('\t t       = %.2f [days]\n',t12/86400);
     fprintf('\t V_inf_D = %.4f*i + %.4f*j + %.4f*k [km/s]\n',V_inf_D);
     fprintf('\t speed_d = %.4f [km/s]\n',speed_inf_D);
     fprintf('\t V_inf_A = %.4f*i + %.4f*j + %.4f*k [km/s]\n',V_inf_A);
     fprintf('\t speed_a = %.4f [km/s]\n',speed_inf_A);
-    date_arrive = datestr(date_vec,'dd/mm/yyyy at HH:MM:SS UT');
-    da = sprintf('\t The spacecraft will arrive on %s\n', date_arrive);
+    date_arrive = datestr(date_vec_i,'dd/mm/yyyy at HH:MM:SS UT');
+    da = sprintf('\t The spacecraft will arrive at %s on %s\n', planet_a, date_arrive);
     fprintf(da)
     
-    disp('---------------------------------------------------------------')
-    disp('The injection elements: ')
-    disp('---------------------------------------------------------------')
+    fprintf('---------------------------------------------------------------\n')
+    fprintf('The injection elements: \n')
+    fprintf('---------------------------------------------------------------\n')
     fprintf('\t beta    = %.4f [deg]\n', beta_d);
     fprintf('\t delta-v = %.4f [km/s]\n', delta_vd)
     
-    disp('---------------------------------------------------------------')
-    disp('The capture elements: ')
-    disp('---------------------------------------------------------------')
+    fprintf('---------------------------------------------------------------\n')
+    fprintf('The capture elements: \n')
+    fprintf('---------------------------------------------------------------\n')
     fprintf('\t beta    = %.4f [deg]\n', beta_a);
     fprintf('\t delta-v = %.4f [km/s]\n', delta_va)
 end
