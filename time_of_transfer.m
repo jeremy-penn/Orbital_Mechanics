@@ -1,5 +1,5 @@
 function time = time_of_transfer(R1, R2, mu)
-    %% Calculate the wait time after Hohmann transfer for return transfer
+    %% Calculate the time of interplanetary transfer
     %
     % Jeremy Penn
     % 06/11/17

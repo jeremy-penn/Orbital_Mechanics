@@ -18,7 +18,6 @@ function kepler = kepler_convert(R,V,mu)
     % Outputs:  o kepler - A 1x6 vector containing the orbital elements.
     %
     
-    clear r v vr H h i k N n E e omega w theta; clc;
     if nargin == 2
         mu = 398600;
     end

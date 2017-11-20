@@ -18,7 +18,7 @@ function planet_data = planet_select(planet)
     
     switch planet
         case 'sun'
-            planet_data = [696000, 1.989e30, 25.38, 7.25, NaN, NaN, NaN, NaN, 132.7e11];
+            planet_data = [696000, 1.989e30, 25.38, 7.25, NaN, NaN, NaN, NaN, 132.7e9];
         case 'mercury'
             planet_data = [2440, 330.2e21, 58.65, .01, 57.91e6, .2056, 7, 87.97, 22030];
         case 'venus'
