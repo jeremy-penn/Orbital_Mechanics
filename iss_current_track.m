@@ -1,5 +1,5 @@
 function iss_current_track()
-    %% pulls current ISS coe from NORAD website
+    %% pulls current ISS two-line element from NORAD website
     %
     % Jeremy Penn
     % 20/11/2017
@@ -15,10 +15,9 @@ function iss_current_track()
     %% pull request for orbital data
     data = webread(url);
     
-    %% isolate the coe
-    split_1 = strsplit(data,'TIANGONG 1');
+    %% isolate the ISS TLE
+    sl = strsplit(data,'\n');
     
-    sl = strsplit(split_1{1},'\n');
     for i = 1:3
         ss{i} = strsplit(sl{i},' ');
     end
