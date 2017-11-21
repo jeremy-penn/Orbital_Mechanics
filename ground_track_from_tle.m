@@ -1,8 +1,8 @@
-function ground_track_from_coe(h, e, i, omega, w, theta, n, mu, Re, J2, we)
+function ground_track_from_tle(i, omega, e, w, M, n)
     %% Calculate and plot the geocentric orbit of a satellite about the Earth
     %
     % Jeremy Penn
-    % 21 October 2017
+    % 20/11/17
     %
     % Revision: 21/10/2017
     %           29/10/2017 - Changed RA from 0:360 to -180:180
@@ -10,45 +10,35 @@ function ground_track_from_coe(h, e, i, omega, w, theta, n, mu, Re, J2, we)
     %                        plot lines more readable. Also fixed an issue
     %                        with inverted y-axis from image import.
     %
-    % function ground_track_from_coe(h, e, i, omega, w, theta, n, mu, Re, J2, we)
+    % function ground_track_from_tle(i, omega, e, w, M, n)
     %
     % Purpose:  This function plots the ground track of a satellite in the
-    %           geocentric frame of reference.
+    %           geocentric frame of reference. Additionally, it creates a
+    %           video of the ground track.
     %
-    % Input:    o h     - Specific angular momentum
+    % Input:    o M     - mean anomaly
     %           o e     - eccentricity
     %           o i     - orbital inclination
     %           o omega - right ascension of the ascending node
     %           o w     - argument of perigee
-    %           o theta - true anomaly
-    %           o n     - number of orbits [OPTIONAL]
-    %           o mu    - standard grav param [OPTIONAL]
-    %           o Re    - central body radius [OPTIONAL]
-    %           o J2    - central body second zonal harmonic [OPTIONAL]
-    %           o we    - central body angular speed [OPTIONAL]
+    %           o n     - mean motion [rev/d]
     %
     % Requires: ecc_anomaly_from_ta.m, ecc_anomaly_from_M.m, ta_from_E.m,
     %           rv_from_coe.m, rot3.m, ra_and_dec_from_r.m, earth.png
     %
     
     clc;
-    if nargin == 6
-        n = 1;
-        Re  = 6378;          % [km] radius of the Earth
-        we  = 7.27e-5;       % [rad/s] angular speed of Earth
-        mu  = 398600;        % [km^3/s^2] Standard Gravitational Parameter
-        J2  = 0.0010836;
-    end
+    %% constants
+    n_orbits = input('Input the number of orbits:\n');
+    Re  = 6378;          % [km] radius of the Earth
+    we  = 7.27e-5;       % [rad/s] angular speed of Earth
+    mu  = 398600;        % [km^3/s^2] Standard Gravitational Parameter
+    J2  = 0.0010836;
     
-    if nargin == 7
-        Re  = 6378;          % [km] radius of the Earth
-        we  = 7.27e-5;       % [rad/s] angular speed of Earth
-        mu  = 398600;        % [km^3/s^2] Standard Gravitational Parameter
-        J2  = 0.0010836;
-    end
-    
+    n = n * pi/43200;    % [rad/s] convert from rev/d
     %% Calculate the semi-major axis
-    a = abs( (h^2/mu) * 1/(e^2 - 1) );
+    a = (mu^(1/3)) / (n^(2/3));
+    h = sqrt( a * mu * (1 - e^2) );
     
     %% Calculate rate of change omega and w
     incl = i*(pi/180);
@@ -59,11 +49,9 @@ function ground_track_from_coe(h, e, i, omega, w, theta, n, mu, Re, J2, we)
     dw     = fac*(5/2*sin(incl)^2 - 2);
     
     %% Find time since perigee
-    E0 = ecc_anomaly_from_ta(theta,e);
-    M0 = E0 - e*sin(E0);
-    T  = 2*pi/sqrt(mu)*a^(3/2);
-    t0 = (M0/(2*pi)) * T;
-    tf = t0 + n*T;
+    T  = 2*pi/n;
+    t0 = (M/(2*pi)) * T;
+    tf = t0 + n_orbits*T;
     
     %% Calculate the RA and dec
     timeint = linspace(t0,tf,1000);

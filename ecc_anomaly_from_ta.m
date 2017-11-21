@@ -1,12 +1,8 @@
 function E = ecc_anomaly_from_ta(th,e)
-    %% Calculates the eccentric anomaly [deg] from the true anomaly [deg]
-    th = mod(th, 360);
+    %% Calculates the eccentric anomaly [rad] from the true anomaly [deg]
+    th1 = mod(th, 360);
     
-    th = th * pi/180;
+    th2 = th1 * pi/180;
    
-    E = 2*atan( sqrt( ((1-e)/(1+e)) )*tan(th/2) );
-    
-    E = E * (180/pi);
-    
-    E = mod(E, 360);
+    E = 2*atan( sqrt( ((1-e)/(1+e)) )*tan(th2/2) );
 end

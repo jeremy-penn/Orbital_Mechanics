@@ -16,7 +16,6 @@ function E = ecc_anomaly_from_M(e, M)
     %
     % Outputs:  o E     - Eccentric anomaly [radians]
     %
-    clc; clear E;
     
     %% Choose initial estimate for E
     if M < pi
