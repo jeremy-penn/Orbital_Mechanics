@@ -13,14 +13,13 @@ function ground_track_from_tle(i, omega, e, w, M, n)
     % function ground_track_from_tle(i, omega, e, w, M, n)
     %
     % Purpose:  This function plots the ground track of a satellite in the
-    %           geocentric frame of reference. Additionally, it creates a
-    %           video of the ground track.
+    %           geocentric frame of reference from the two line element.
     %
-    % Input:    o M     - mean anomaly
+    % Input:    o M     - mean anomaly [deg]
     %           o e     - eccentricity
-    %           o i     - orbital inclination
-    %           o omega - right ascension of the ascending node
-    %           o w     - argument of perigee
+    %           o i     - orbital inclination [deg]
+    %           o omega - right ascension of the ascending node [deg]
+    %           o w     - argument of perigee [deg]
     %           o n     - mean motion [rev/d]
     %
     % Requires: ecc_anomaly_from_ta.m, ecc_anomaly_from_M.m, ta_from_E.m,
