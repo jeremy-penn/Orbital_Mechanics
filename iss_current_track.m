@@ -6,7 +6,7 @@ function iss_current_track()
     %
     % function iss_current_track()
     %
-    % Required: ecc_anomaly_from_M.m, ta_from_E.m, ground_track_from_coe.m
+    % Required: ecc_anomaly_from_M.m, ta_from_E.m, ground_track_from_tle.m
     %
     
     %% url to pull data
