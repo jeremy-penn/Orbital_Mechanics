@@ -17,8 +17,6 @@ function F = hyp_anomaly(e, M)
     % Outputs:  o F     - Hyperbolic anomaly [radians]
     %
     
-    clc;
-    
     %% Initial guess
     F = M;
     
@@ -30,5 +28,3 @@ function F = hyp_anomaly(e, M)
         ratio = (e*sinh(F) - F - M) / (e*cosh(F) - 1);
         F     = F - ratio;
     end
-    
-    fprintf('The hyperbolic anomaly is %.4f [rad]\n',F)
