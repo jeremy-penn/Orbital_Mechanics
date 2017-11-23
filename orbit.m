@@ -130,7 +130,7 @@ function orbit()
             'Gcolor',[0.9 0.9 0.1],'Galtitude',100);
         ax.Position = [0 0 1 1];
         axis equal off
-        view(0,23.5)
+        %view(0,23.5)
 
         geoshow(S.topo,S.topolegend,'DisplayType','texturemap')
         demcmap(S.topo)
@@ -147,7 +147,7 @@ function orbit()
         %   Plot the orbit, draw a radial to the starting point
         %   and label the starting point (o) and the final point (f)
         hold on
-        plot3(  y(:,1),    y(:,2),    y(:,3),'k')
+        plot3(  y(:,1),    y(:,2),    y(:,3),'r')
         line([0 r0(1)], [0 r0(2)], [0 r0(3)])
         text(   y(1,1),    y(1,2),    y(1,3), 'o')
         text( y(end,1),  y(end,2),  y(end,3), 'f')

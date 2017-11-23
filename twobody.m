@@ -86,12 +86,12 @@ function twobody()
         
         %...Plot the trajectories:
         figure (1)
+        axis off
         title('Motion relative to the inertial frame')
         hold on
         plot3(X1, Y1, Z1, '-r')
         plot3(X2, Y2, Z2, '-g')
         plot3(XG, YG, ZG, '-b')
-        
         
         %comet3(X1, Y1, Z1);
         %comet3(X2, Y2, Z2);
