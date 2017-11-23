@@ -13,7 +13,7 @@ function twobody()
     R2_0 = input('Input the initial position vector of the second mass [x, y, z] (km):\n');
     
     V1_0 = input('Input the initial velocity vector of the first mass [x, y, z] (km):\n');
-    V2_0 = input('Input the initial velocity vector of the first mass [x, y, z] (km):\n');
+    V2_0 = input('Input the initial velocity vector of the second mass [x, y, z] (km):\n');
     
     %% make sure all vectors are column vectors
     if isrow(R1_0)
