@@ -6,13 +6,14 @@ function orbit()
     %
     % Requires: rkf45.m,
     %
+    S = load('topo');
     
     %% constants
     G  = 6.6742e-20; %[km^3/kg s^2] gravitational constant
     
     %% inputs
-    m1 = input('Input the mass of the central body (kg):\n');
-    R  = input('Input the radius of the central body (km):\n');
+    m1 = 5.974e24; %[kg]
+    R  = 6378;     %[km]
     m2 = input('Input the mass of the orbiting body (kg):\n');
     
     r0 = input('Input the initial geocentric position vector of the orbiting body [x, y, z](km):\n');
@@ -32,7 +33,7 @@ function orbit()
     return
     
     %% -------subfunctions------------------------
-    function dydt = rates(t,f)
+    function dydt = rates(t,f) %#ok<*INUSL>
         % ~~~~~~~~~~~~~~~~~~~~~~~~
         %{
         This function calculates the acceleration vector using Equation 2.22
@@ -80,12 +81,13 @@ function orbit()
         %}
         % -------------
         [h, e, inc, W, w, ta] = coe_from_rv(r0,v0);
+        
         for i = 1:length(t)
-            r(i) = norm([y(i,1) y(i,2) y(i,3)]);
+            r(i) = norm([y(i,1) y(i,2) y(i,3)]); %#ok<*AGROW>
         end
         
-        [rmax imax] = max(r);
-        [rmin imin] = min(r);
+        [rmax, imax] = max(r);
+        [rmin, imin] = min(r);
         
         v_at_rmax   = norm([y(imax,4) y(imax,5) y(imax,6)]);
         v_at_rmin   = norm([y(imin,4) y(imin,5) y(imin,6)]);
@@ -119,11 +121,23 @@ function orbit()
         
         %...Plot the results:
         %   Draw the planet
-        [xx, yy, zz] = sphere(100);
-        surf(R*xx, R*yy, R*zz)
-        colormap(light_gray)
-        caxis([-R/100 R/100])
-        shading interp
+
+        grs80 = referenceEllipsoid('grs80','km');
+        
+        figure('Renderer','opengl')
+        ax = axesm('globe','Geoid',grs80,'Grid','off', ...
+            'GLineWidth',1,'GLineStyle','-',...
+            'Gcolor',[0.9 0.9 0.1],'Galtitude',100);
+        ax.Position = [0 0 1 1];
+        axis equal off
+        view(0,23.5)
+
+        geoshow(S.topo,S.topolegend,'DisplayType','texturemap')
+        demcmap(S.topo)
+        land = shaperead('landareas','UseGeoCoords',true);
+        plotm([land.Lat],[land.Lon],'Color','black')
+        rivers = shaperead('worldrivers','UseGeoCoords',true);
+        plotm([rivers.Lat],[rivers.Lon],'Color','blue')
         
         %   Draw and label the X, Y and Z axes
         line([0 2*R],   [0 0],   [0 0]); text(2*R,   0,   0, 'X')
@@ -148,22 +162,5 @@ function orbit()
         ylabel('km')
         zlabel('km')
         
-        function map = light_gray
-            % ~~~~~~~~~~~~~~~~~~~~~~~
-            %{
-             This function creates a color map for displaying the planet as light
-             gray with a black equator.
-  
-            r - fraction of red
-            g - fraction of green
-            b - fraction of blue
-
-            %}
-            % -----------------------
-            r = 0.8; g = r; b = r;
-            map = [r g b
-                0 0 0
-                r g b];
-        end %light_gray
     end %output
 end
