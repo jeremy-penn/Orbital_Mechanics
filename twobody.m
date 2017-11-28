@@ -1,4 +1,12 @@
 function twobody()
+    %% solves the two body problem
+    %
+    % Jeremy Penn
+    % 23/11/17
+    %
+    % function twobody()
+    %
+    % Required: rkf45.m
     
     %% constants
     G = 6.67408e-20; %[km^3 / kg s^2]
