@@ -105,10 +105,13 @@ function ground_track_from_coe(h, e, i, omega, w, theta, n, mu, Re, J2, we)
     ax.YTickLabels = {'\bf 90 S', '\bf 60 S', '\bf 30 S', '\bf 0', '\bf 30 N', '\bf 60 N', '\bf 90 N'};
     ax.XTickLabels = {'\bf 0', '\bf 60', '\bf 120','\bf 180', '\bf 240', '\bf 300', '\bf 360'};
     set(gca,'FontSize',16,'Ydir','normal')
+    set(gcf,'color',[.43, .43, .43])
+    ax.XAxis.Color = 'w';
+    ax.YAxis.Color = 'w';
     
-    ylabel('Latitude [deg]','FontSize',20);
-    xlabel('Longitude [deg]','FontSize',20);
-    title('Satellite Ground Track','FontSize',24,'color','blue');
+    ylabel('Latitude [deg]','FontSize',20,'color','w');
+    xlabel('Longitude [deg]','FontSize',20,'color','w');
+    title('Satellite Ground Track','FontSize',24,'color','w');
     
     ts = text(ra{1}(1), dec{1}(1), 'o Start','color','black','FontWeight','bold');
     tf = text(ra{end}(end), dec{end}(end), 'o Finish','color','black','FontWeight','bold');
