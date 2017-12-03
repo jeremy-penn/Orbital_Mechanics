@@ -15,7 +15,7 @@ function ground_track_from_tle(i, omega, e, w, M, n)
     % Purpose:  This function plots the ground track of a satellite in the
     %           geocentric frame of reference from the two line element.
     %
-    % Input:    o M     - mean anomaly [deg]
+    % Input:    o M     - mean anomaly [rad]
     %           o e     - eccentricity
     %           o i     - orbital inclination [deg]
     %           o omega - right ascension of the ascending node [deg]
