@@ -167,7 +167,7 @@ function iss_current_track()
     function output
         clc;
         r_a = (1 + e)*a;
-        r_p = (1 + e)*a;
+        r_p = (1 - e)*a;
         v_p = sqrt( ((1+e)*mu)/((1-e)*a) );
         v_a = sqrt( ((1-e)*mu)/((1+e)*a) );
         
