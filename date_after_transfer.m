@@ -43,7 +43,7 @@ function date_vec = date_after_transfer(print_out, d, m, y, in_h, in_m, in_s, da
     end
     
     month_d = 0;
-    for i = 1:m
+    for i = 1:m - 1
         month_d = month_d + length_of_month(i);
     end
     

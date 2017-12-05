@@ -1,10 +1,13 @@
-function iss_current_track()
+function iss_tracking()
     %% pulls current ISS two-line element from NORAD website
     %
     % Jeremy Penn
     % 20/11/2017
     %
     % function iss_current_track()
+    %
+    % Purpose:  This function calculates and plots the ground track and
+    %           orbit of the ISS using the TLE from NORAD.
     %
     % Requires: ecc_anomaly_from_ta.m, ecc_anomaly_from_M.m, ta_from_E.m,
     %           rv_from_coe.m, rot3.m, ra_and_dec_from_r.m, earth.png
@@ -16,6 +19,7 @@ function iss_current_track()
     we  = 7.27e-5;       % [rad/s] angular speed of Earth
     mu  = 398600;        % [km^3/s^2] Standard Gravitational Parameter
     J2  = 0.0010836;
+    m_2 = 419455;        % [kg] mass of the ISS (approximate)
     
     %% url to pull data
     url = 'http://www.celestrak.com/NORAD/elements/stations.txt';
@@ -49,18 +53,27 @@ function iss_current_track()
     a = (mu^(1/3)) / (n^(2/3));     % semi-major axis [km]
     h = sqrt( a * mu * (1 - e^2) ); % specific angular momentum [km^2/s]
     
-    %% calculate the ground track
-    ground_track_from_tle(inc, W, e, w, M, n)
+    % Find time since perigee
+    T  = 2*pi/n;
+    t0 = (M/(2*pi)) * T;
+    tf = t0 + n_orbits*T;
     
-    %% ouput the results
-    output
+    %% calculate the orbit
+    E_0  = ecc_anomaly_from_M(e, M);
+    ta = ta_from_E(E_0,e);
+    [r_0, v_0] = rv_from_coe(h, e, inc, W, w, ta);
+    
+    orbit(r_0, v_0, m_2, t0, tf, a)    
+    
+    %% calculate the ground track
+    ground_track_from_tle(inc, W, e, w)
     
     return
     
     %%-------------subfunctions---------------------------------
-    function ground_track_from_tle(i, omega, e, w, M, n)
+    function ground_track_from_tle(i, omega, e, w)
         % Calculate and plot the geocentric orbit of a satellite about the Earth
-
+        
         %
         % Input:    o M     - mean anomaly [rad]
         %           o e     - eccentricity
@@ -77,11 +90,6 @@ function iss_current_track()
         
         domega = fac*cos(incl);
         dw     = fac*(5/2*sin(incl)^2 - 2);
-        
-        % Find time since perigee
-        T  = 2*pi/n;
-        t0 = (M/(2*pi)) * T;
-        tf = t0 + n_orbits*T;
         
         % Calculate the RA and dec
         timeint = linspace(t0,tf,1000);
@@ -163,33 +171,4 @@ function iss_current_track()
             end
         end %form_separate_curves
     end %ground_track
-    
-    function output
-        clc;
-        r_a = (1 + e)*a;
-        r_p = (1 - e)*a;
-        v_p = sqrt( ((1+e)*mu)/((1-e)*a) );
-        v_a = sqrt( ((1-e)*mu)/((1+e)*a) );
-        
-        fprintf('----------------------------------------------\n')
-        fprintf('Current ISS orbital elements: \n')
-        fprintf('----------------------------------------------\n\n')
-        fprintf('\t h   = %.2f [km^2/s]\n', h)
-        fprintf('\t a   = %.2f [km]\n', a)
-        fprintf('\t r_a = %.2f [km]\n', r_a)
-        fprintf('\t r_p = %.2f [km]\n',r_p)
-        fprintf('\t i   = %.2f [deg]\n',inc)
-        fprintf('\t e   = %.4f \n',e)
-        fprintf('\t W   = %.2f [deg]\n',W)
-        fprintf('\t w   = %.2f [deg]\n\n',w)
-        fprintf('----------------------------------------------\n')
-        fprintf('Orbital altitude and speed: \n')
-        fprintf('----------------------------------------------\n\n')
-        fprintf('Maximum altitude: %.2f [km]\n',r_a - Re)
-        fprintf('Minimum altitude: %.2f [km]\n',r_p - Re)
-        fprintf('Maximum speed:    %.2f [km/s]\n',v_p)
-        fprintf('Minimum speed:    %.2f [km/s]\n',v_a)
-        fprintf('Orbital energy:   %.2f [MJ/kg]\n',-mu/(2*a))
-        fprintf('\n\n')
-    end %output
 end %iss_current_track

@@ -37,6 +37,4 @@ function stime = sidereal(y, m, d,h, min, sec,gam)
     th = mod(th, 360);
     
     stime = th;
-    
-    fprintf('The local sidereal time is %5.2f',stime)
 end

@@ -1,8 +1,16 @@
-function orbit()
+function orbit(r_0, v_0, m_2, t_0, t_f, a)
     %% plots the orbit of a small mass around a large central mass
     %
     % Jeremy Penn
     % 22/11/17
+    %
+    % function orbit(r_0, v_0, m_2, t_0, t_f)
+    %
+    % Inputs:   o r_0   - The initial position vector [OPTIONAL]
+    %           o v_0   - The initial velocity vector [OPTIONAL]
+    %           o m_2   - The mass of the orbiting body [OPTIONAL]
+    %           o t_0   - The initial time [OPTIONAL]
+    %           o t_f   - The final time [OPTIONAL]
     %
     % Requires: rkf45.m,
     %
@@ -12,15 +20,33 @@ function orbit()
     G  = 6.6742e-20; %[km^3/kg s^2] gravitational constant
     
     %% inputs
-    m1 = 5.974e24; %[kg]
-    R  = 6378;     %[km]
-    m2 = input('Input the mass of the orbiting body (kg):\n');
+    m1 = 5.974e24; % mass of the Earth [kg]
+    R  = 6378;     % radisu of the Earth[km]
     
-    r0 = input('Input the initial geocentric position vector of the orbiting body [x, y, z](km):\n');
-    v0 = input('Input the initial geocentric velocity vector of the orbiting body [vx, vy, vz] (km/s):\n');
+    if nargin < 1
+        m2 = input('Input the mass of the orbiting body (kg):\n');
+        r0 = input('Input the initial geocentric position vector of the orbiting body [x, y, z](km):\n');
+        v0 = input('Input the initial geocentric velocity vector of the orbiting body [vx, vy, vz] (km/s):\n');
+        
+        t0 = input('Input the initial time (s):\n');
+        tf = input('Input the final time (s): \n');
+    else
+        r0 = r_0;
+        v0 = v_0;
+        m2 = m_2;
+        t0 = t_0;
+        tf = t_f;
+    end
     
-    t0 = input('Input the initial time (s):\n');
-    tf = input('Input the final time (s): \n');
+    %% confirm r and v are row vectors
+    
+    if iscolumn(r_0)
+        r0 = r0';
+    end
+    
+    if iscolumn(v_0)
+        v0 = v0';
+    end
     
     %% numerically integrate the orbit
     mu    = G*(m1 + m2);
@@ -38,14 +64,14 @@ function orbit()
         %{
         This function calculates the acceleration vector using Equation 2.22
   
-        t          - time
-        f          - column vector containing the position vector and the
-               velocity vector at time t
-        x, y, z    - components of the position vector r
-        r          - the magnitude of the the position vector
-        vx, vy, vz - components of the velocity vector v
-         ax, ay, az - components of the acceleration vector a
-         dydt       - column vector containing the velocity and acceleration
+        t           - time
+        f           - column vector containing the position vector and the
+                      velocity vector at time t
+        x, y, z     - components of the position vector r
+        r           - the magnitude of the the position vector
+        vx, vy, vz  - components of the velocity vector v
+        ax, ay, az  - components of the acceleration vector a
+        dydt        - column vector containing the velocity and acceleration
                       components
         %}
         % ------------------------
@@ -112,16 +138,18 @@ function orbit()
         fprintf('\n The speed at that point is %g km/s\n', v_at_rmax)
         fprintf('\n The classic orbital elements:\n')
         fprintf('\n\t h  = %.2f [km^2/s]',h)
-        fprintf('\n\t e  = %.2f',e)
+        fprintf('\n\t a  = %.2f [km]',a)
+        fprintf('\n\t e  = %.5f',e)
         fprintf('\n\t i  = %.2f [deg]',inc)
         fprintf('\n\t W  = %.2f [deg]',W)
         fprintf('\n\t w  = %.2f [deg]',w)
         fprintf('\n\t ta = %.2f [deg]',ta)
+        fprintf('\n\t ep = %.2f [MJ/kg]',-mu / (2*a))
         fprintf('\n--------------------------------------------------------\n\n')
         
         %...Plot the results:
         %   Draw the planet
-
+        
         grs80 = referenceEllipsoid('grs80','km');
         
         figure('Renderer','opengl')
@@ -131,7 +159,7 @@ function orbit()
         ax.Position = [0 0 1 1];
         axis equal off
         %view(0,23.5)
-
+        
         geoshow(S.topo,S.topolegend,'DisplayType','texturemap')
         demcmap(S.topo)
         land = shaperead('landareas','UseGeoCoords',true);

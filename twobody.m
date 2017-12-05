@@ -20,8 +20,8 @@ function twobody()
     R1_0 = input('Input the initial position vector of the first mass [x, y, z] (km):\n');
     R2_0 = input('Input the initial position vector of the second mass [x, y, z] (km):\n');
     
-    V1_0 = input('Input the initial velocity vector of the first mass [x, y, z] (km):\n');
-    V2_0 = input('Input the initial velocity vector of the second mass [x, y, z] (km):\n');
+    V1_0 = input('Input the initial velocity vector of the first mass [x, y, z] (km/s):\n');
+    V2_0 = input('Input the initial velocity vector of the second mass [x, y, z] (km/s):\n');
     
     %% make sure all vectors are column vectors
     if isrow(R1_0)
@@ -94,7 +94,6 @@ function twobody()
         
         %...Plot the trajectories:
         figure (1)
-        axis off
         title('Motion relative to the inertial frame')
         hold on
         plot3(X1, Y1, Z1, '-r')

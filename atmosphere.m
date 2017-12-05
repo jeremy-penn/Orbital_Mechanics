@@ -2,7 +2,7 @@ function density = atmosphere(z)
     %
     % ATMOSPHERE calculates density for altitudes from sea level
     % through 1000 km using exponential interpolation.
-    %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    %
     
     %...Geometric altitudes (km):
     h = ...

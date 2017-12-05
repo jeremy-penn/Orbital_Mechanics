@@ -9,8 +9,8 @@ function geocentric_track(R0, V0, dt, step,mu)
     %
     % function GeocentricTrack(R0, V0, dt, step)
     %
-    % Purpose:  This function plots the orbit of a satellite in the
-    %           geocentric frame of reference. Additionally, it creates a
+    % Purpose:  This function plots the orbit of a satellite as a function of time
+    %           in the geocentric frame of reference. Additionally, it creates a
     %           video of the orbit.
     % 
     % Inputs:   o R0 - A 1x3 vector of the satellite's initial position
@@ -70,9 +70,9 @@ function geocentric_track(R0, V0, dt, step,mu)
             ax.Position = [0 0 1 1];
             axis equal off
             
-            rotate(h1,direction,rotation(i))
-            rotate(h2,direction,rotation(i))
-            rotate(h3,direction,rotation(i))
+            %rotate(h1,direction,rotation(i))
+            %rotate(h2,direction,rotation(i))
+            %rotate(h3,direction,rotation(i))
             view(0,23.5)
             scatter3(Ri(i,1),Ri(i,2),Ri(i,3),'.r');
             refreshdata
