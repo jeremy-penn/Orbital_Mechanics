@@ -1,17 +1,18 @@
 function iss_tracking()
     %% pulls current ISS two-line element from NORAD website
-    %
-    % Jeremy Penn
-    % 20/11/2017
-    %
-    % function iss_current_track()
-    %
-    % Purpose:  This function calculates and plots the ground track and
-    %           orbit of the ISS using the TLE from NORAD.
-    %
-    % Requires: ecc_anomaly_from_ta.m, ecc_anomaly_from_M.m, ta_from_E.m,
-    %           rv_from_coe.m, rot3.m, ra_and_dec_from_r.m, earth.png
-    %
+    %{
+    Jeremy Penn
+    20/11/2017
+    Updated: 24/06/2018
+    
+    function iss_current_track()
+   
+    Purpose:  This function calculates and plots the ground track and
+               orbit of the ISS using the TLE from NORAD.
+    
+    Requires: ecc_anomaly_from_ta.m, ecc_anomaly_from_M.m, ta_from_E.m,
+               rv_from_coe.m, rot3.m, ra_and_dec_from_r.m, earth.png
+    %}
     
     %% constants
     n_orbits = input('Input the number of orbits:\n');
@@ -30,15 +31,16 @@ function iss_tracking()
     %% isolate the ISS TLE
     sl = strsplit(data,'\n');
     
-    for i = 1:3
+    for i = 1:3 % isolate the first 3 lines (ISS)
         ss{i} = strsplit(sl{i},' ');
     end
     
     ss{3}{5} = strcat('0.',ss{3}{5});
     
-    for lj = 1:9
+    for lj = 1:length(ss{3}) - 1
         coe(lj) = str2double(ss{3}{lj});
     end
+    coe(8) = str2double( extractBefore(ss{3}{8},12) );
     
     %% separate coe
     inc = coe(3);           % orbital inclination [deg]

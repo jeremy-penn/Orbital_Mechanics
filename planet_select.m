@@ -24,7 +24,7 @@ function planet_data = planet_select(planet)
         case 'venus'
             planet_data = [6052, 4.869e24, 243, 177.4, 108.2e6, .0067, 3.39, 224.7, 324900];
         case 'earth'
-            planet_data = [6378, 5.974e24, 23.9345, 23.45, 149.6e6, .0167, 0, 365.256, 398600];
+            planet_data = [6371, 5.974e24, 23.9345, 23.45, 149.6e6, .0167, 0, 365.256, 398600];
         case 'moon'
             planet_data = [1737, 73.48e21, 27.32, 6.68, 384.4e3, .0549, 5.145, 27.322, 4903];
         case 'mars'
