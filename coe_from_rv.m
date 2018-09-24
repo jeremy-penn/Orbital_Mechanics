@@ -65,7 +65,7 @@ function [h, e, i, omega, w, theta] = coe_from_rv(R,V,mu)
     
     %% Calculate the eccentricity
     
-    E = (1 / mu)*((v^2 - (mu / r))*R - r*vr*V);
+    E = (1 / mu)*((v^2 - (mu / r))*R - vr*V);
     e = norm(E);
     
     %% Calculate the argument of perigee
